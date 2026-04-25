@@ -370,7 +370,6 @@ body {
 }
 
 
-/* Animations */
 @keyframes fadeUp {
   to {
     opacity: 1;
@@ -378,7 +377,6 @@ body {
   }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .page {
     justify-content: center;
