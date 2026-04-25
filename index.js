@@ -1,12 +1,12 @@
-function goto_login() {
-  window.location.href = "../login-page/index.html";
-}
-function goto_create() {
-  window.location.href = "../register-page/index.html";
-}
-function back(){
-  window.location.href="../index.html";
-}
+// function goto_login() {
+//   window.location.href = "../login-page/index.html";
+// }
+// function goto_create() {
+//   window.location.href = "../register-page/index.html";
+// }
+// function back(){
+//   window.location.href="../index.html";
+// }
 
 // //HOME-PAGE (dropdown button)
 // const btn = document.querySelector('.more-btn');
