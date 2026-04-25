@@ -1,87 +1,386 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background-color: #333;
-background:linear-gradient(to right,#111,#2b2b2b);
-/* background:url(image.png) no-repeat center center/cover ; */
-/* opacity: 0.4; */
-/* z-index: -1; */
+:root {
+  --black: #0a0a0a;
+  --dark: #111111;
+  --panel: #0f0f0f;
+  --white: #ffffff;
+  --muted-1: rgba(255, 255, 255, 0.55);
+  --muted-2: rgba(255, 255, 255, 0.35);
+  --muted-3: rgba(255, 255, 255, 0.18);
+  --muted-4: rgba(255, 255, 255, 0.08);
+  --accent: rgba(255, 255, 255, 0.75);
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans: "Montserrat", sans-serif;
+  --transition: all 0.3s ease;
 }
 
-.container{
-width:350px;
-/* opacity: 1; */
+html,
+body {
+  height: 100%;
+  font-family: var(--sans);
+  color: #ffffff;
+  overflow: hidden;
 }
 
-.register-form{
-padding:40px;
-border-radius:15px;
-
-background:rgba(255,255,255,0.1);
-backdrop-filter:blur(15px);
-
-border:1px solid rgba(255,255,255,0.3);
-box-shadow:0 8px 32px rgba(0,0,0,0.2);
-
-text-align:center;
-color:white;
+/* ── Full page background ── */
+.page {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.register-form h2{
-margin-bottom:20px;
+.page-bg {
+  position: absolute;
+  inset: 0;
+  background: url("../images/chatp.png") center center / cover no-repeat;
+  background-position: center top;
+  transform: scale(1.04);
+  transition: transform 8s ease;
+  z-index: 0;
 }
 
-.register-form input{
-width:100%;
-padding:12px;
-margin:10px 0;
-
-border:none;
-outline:none;
-
-border-radius:8px;
-background:rgba(255,255,255,0.2);
-color:white;
+.page-bg.loaded {
+  transform: scale(1);
 }
 
-.register-form input::placeholder{
-color:#eee;
+/* dark overlay across full image */
+.page-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
-.register-form button{
-width:100%;
-padding:12px;
-margin-top:15px;
-
-border:none;
-border-radius:8px;
-
-background:#ffffff;
-color:#333;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
+/* bottom fade */
+.page-overlay-bottom {
+  position: absolute;
+  inset: 0;
+  /* background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, transparent 50%); */
+  z-index: 1;
 }
 
-.register-form button:hover{
-background:#ddd;
+/* ── Brand top-left ── */
+.brand {
+  position: absolute;
+  top: 2.5rem;
+  left: 3rem;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  letter-spacing: 0.22em;
+  color: var(--white);
+  font-weight: 500;
+  z-index: 10;
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: fadeUp 0.8s ease 0.2s forwards;
 }
 
-.register-form p{
-margin-top:15px;
-font-size:14px;
+/* ── Glassmorphism Form Card ── */
+.right {
+  position: relative;
+  z-index: 10;
+  width: 420px;
+  padding: 3rem 2.8rem;
+  background: rgba(10, 10, 10, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fadeUp 1s ease 0.4s forwards;
+  border-top: 0.5px solid rgba(255, 255, 255, 0.18);
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  margin-bottom: 2rem;
+  transition: color 0.2s;
 }
 
-.register-form a{
-color:#fff;
-text-decoration:underline;
+.back-btn:hover {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.back-btn:hover .back-arrow {
+  transform: translateX(-3px);
+}
+
+.back-arrow {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  transition: transform 0.2s ease;
+}
+
+.form-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/* Form header */
+.form-tag {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+}
+
+.form-title {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.form-sub {
+  font-size: 11px;
+  color: var(--muted-2);
+  letter-spacing: 0.05em;
+  font-weight: 300;
+  margin-bottom: 2.5rem;
+}
+
+.field {
+  margin-bottom: 1.4rem;
+  position: relative;
+}
+
+.field label {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.field:focus-within label {
+  color: var(--accent);
+}
+
+.field input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 0.5px solid var(--muted-3);
+  padding: 9px 0;
+  font-size: 13px;
+  color: var(--white);
+  outline: none;
+  letter-spacing: 0.05em;
+  font-family: var(--sans);
+  font-weight: 300;
+  transition: border-color 0.25s;
+}
+
+.field input::placeholder {
+  color: var(--muted-3);
+  font-size: 12px;
+}
+
+.field input:focus {
+  border-bottom-color: rgba(255, 255, 255, 0.6);
+}
+
+/* animated underline on focus */
+.field::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--white);
+  transition: width 0.3s ease;
+}
+
+.field:focus-within::after {
+  width: 100%;
+}
+
+/* Buttons */
+.btn-login {
+  width: 100%;
+  padding: 13px;
+  background: var(--white);
+  color: var(--black);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-weight: 500;
+  transition:
+    background 0.25s,
+    opacity 0.25s;
+  margin-bottom: 0.85rem;
+}
+
+.btn-login:hover {
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.btn-login:active {
+  opacity: 0.8;
+}
+
+.btn-guest {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  color: var(--muted-2);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: 0.5px solid var(--muted-3);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-weight: 400;
+  transition:
+    border-color 0.25s,
+    color 0.25s;
+  text-decoration: none;
+}
+
+.btn-guest:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--muted-1);
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 1.1rem 0;
+}
+
+.divider-line {
+  flex: 1;
+  height: 0.5px;
+  background: var(--muted-4);
+}
+
+.divider-text {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-3);
+  font-weight: 400;
+}
+
+/* Sign up row */
+.signup-row {
+  text-align: center;
+  margin-top: 1.8rem;
+}
+
+.signup-row span {
+  font-size: 11px;
+  color: var(--muted-2);
+  letter-spacing: 0.04em;
+  font-weight: 300;
+}
+
+.signup-row a {
+  /* text-decoration: none; */
+  font-size: 11px;
+  color: var(--muted-1);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.03);
+  padding-bottom: 1px;
+  font-weight: 400;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.signup-row a:hover {
+  color: var(--white);
+  border-bottom-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Bottom left corner decoration */
+.corner-deco {
+  position: absolute;
+  bottom: 2rem;
+  right: 3rem;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-3);
+  font-weight: 300;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page {
+    justify-content: center;
+    padding-right: 0;
+    padding: 1.5rem;
+    align-items: center;
+  }
+
+  .right {
+    width: 100%;
+    max-width: 380px;
+    padding: 2.5rem 1.8rem;
+  }
+
+  .left-headline {
+    font-size: 2rem;
+  }
+
+  .hero-text {
+    display: none;
+  }
+
+  html,
+  body {
+    overflow: auto;
+  }
 }

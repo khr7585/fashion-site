@@ -1,27 +1,87 @@
 <html>
   <head>
-    <meta />
-    <title>Glass Register</title>
+    <title>Create account</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&amp;family=Montserrat:wght@300;400;500&amp;display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <div class="container">
-      <form class="register-form">
-        <h2>Create Account</h2>
+    <div class="page">
+      <div class="page-bg loaded" id="pageBg"></div>
+      <div class="page-overlay"></div>
+      <div class="page-overlay-bottom"></div>
 
-        <input type="text" id="name" placeholder="Full Name" required />
-        <input type="email" id="email" placeholder="Email Address" required />
-        <input type="password" id="password" placeholder="Password" required />
-        <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+      <div class="brand">JAKE BILLA</div>
 
-        <button type="submit" id="registerBtn" >Register</button>
+      <div class="right">
+        <button class="back-btn" onclick="back()">
+          <svg
+            class="back-arrow"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          Back
+        </button>
+        <div class="form-wrap">
+          <p class="form-tag">JOIN THE COLLECTION</p>
+          <h2 class="form-title">Create account</h2>
+          <p class="form-sub">Become part of Jake Billa</p>
+          <div class="field">
+            <label for="fname">Enter Your Name</label>
+            <input
+              type="text"
+              id="fname"
+              placeholder="Billa"
+              autocomplete="given-name"
+            />
+          </div>
 
-        <p>Already have an account? <a href="#" onclick="goto_login()">Login</a></p>
-      </form>
+          <div class="field">
+            <label for="email">Email address</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="••••••••"
+              autocomplete="new-password"
+              oninput="checkStrength(this.value)"
+            />
+          </div>
+
+          <div class="field">
+            <label for="confirm">Confirm password</label>
+            <input
+              type="password"
+              id="confirm"
+              placeholder="••••••••"
+              autocomplete="new-password"
+            />
+          </div>
+
+          <button class="btn-login" ">
+            CREATE ACCOUNT
+          </button>
+
+          <div class="signup-row">
+            <span>Already have an account? </span>
+            <a href="#" onclick="goto_login()">Sign in</a>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-
     <script src="../index.js"></script>
   </body>
 </html>
