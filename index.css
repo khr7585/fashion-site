@@ -56,9 +56,13 @@ body {
 
 /* LOGO */
 .logo {
-  font-size: 24px;
-  font-weight: 600;
-  letter-spacing: 3px;
+  /* font-family:  "Cormorant Garamond", Georgia, serif; */
+  /* font-family: 'Cormorant Garamond', serif; */
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: 6px;
+  /* color: white; */
 }
 
 /* NAV LINKS */
@@ -69,6 +73,8 @@ body {
 }
 
 .nav-links li {
+  /* font-family: "Montserrat", sans-serif; */
+  font-family: 'Jost', sans-serif;
   font-size: 18px;
   cursor: pointer;
 }
@@ -234,7 +240,8 @@ body {
 }
 
 .info h3 {
-  font-size: 15px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
   margin-bottom: 8px;
 }
 
