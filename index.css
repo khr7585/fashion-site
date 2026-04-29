@@ -3,6 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+html{
+  scroll-behavior: smooth;
+}
 
 body {
   font-family: "Inter", sans-serif;
@@ -77,6 +80,11 @@ body {
   font-family: "Jost", sans-serif;
   font-size: 18px;
   cursor: pointer;
+}
+.nav-links li a{
+  text-decoration: none;
+  color: #fff;
+  /* scroll-behavior: smooth; */
 }
 
 /* RIGHT SIDE */
