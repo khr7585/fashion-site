@@ -11,7 +11,6 @@ body {
   font-family: "Inter", sans-serif;
 }
 
-/* HERO BACKGROUND */
 .hero {
   position: relative;
   height: 100vh;
@@ -33,7 +32,6 @@ body {
   );
 }
 
-/* BOTTOM FADE */
 .hero::after {
   content: "";
   position: absolute;
@@ -43,7 +41,6 @@ body {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
 }
 
-/* NAVBAR */
 .navbar {
   /* backdrop-filter: blur; */
   position: absolute;
@@ -57,7 +54,6 @@ body {
   color: #fff;
 }
 
-/* LOGO */
 .logo {
   /* font-family:  "Cormorant Garamond", Georgia, serif; */
   /* font-family: 'Cormorant Garamond', serif; */
@@ -68,7 +64,6 @@ body {
   /* color: white; */
 }
 
-/* NAV LINKS */
 .nav-links {
   display: flex;
   gap: 30px;
@@ -87,7 +82,6 @@ body {
   /* scroll-behavior: smooth; */
 }
 
-/* RIGHT SIDE */
 .nav-right {
   display: flex;
   gap: 70px;
@@ -114,7 +108,6 @@ body {
   font-size: 18px;
 }
 
-/* HERO CONTENT */
 .hero-content {
   position: absolute;
   left: 90px;
@@ -124,14 +117,12 @@ body {
   color: #fff;
 }
 
-/* SUB TEXT */
 .sub {
   letter-spacing: 4px;
   font-size: 12px;
   margin-bottom: 20px;
 }
 
-/* MAIN TEXT */
 .hero-content h1 {
   font-family: "Playfair Display", serif;
   font-size: 80px;
@@ -144,7 +135,6 @@ body {
   font-style: italic;
 }
 
-/* BUTTONS */
 .buttons {
   margin-top: 40px;
   display: flex;
@@ -158,7 +148,6 @@ body {
   transition: 0.3s ease;
 }
 
-/* PRIMARY BUTTON */
 .primary {
   display: inline-block;
   padding: 12px 28px;
@@ -181,7 +170,6 @@ body {
   background: #222;
 }
 
-/* OUTLINE BUTTON */
 .outline {
   background: transparent;
   color: #fff;
@@ -193,7 +181,6 @@ body {
   color: #000;
 }
 
-/* our products */
 .our-products {
   background: #f5f5f5;
   text-align: center;
@@ -223,14 +210,12 @@ body {
   padding: 40px;
 }
 
-/* Grid Layout */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 25px;
 }
 
-/* Card */
 .card {
   background: #fff;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -278,7 +263,6 @@ body {
   color: #fff;
 }
 
-/* Wishlist */
 .wishlist {
   position: absolute;
   top: 12px;
@@ -318,7 +302,6 @@ body {
   fill: #e8432d;
 }
 
-/* Image */
 .card img {
   /* position: relative; */
   aspect-ratio: 4/5;
@@ -331,7 +314,6 @@ body {
   border-radius: 10px 10px 0 0;
 }
 
-/* Info */
 .info {
   padding: 15px;
 }

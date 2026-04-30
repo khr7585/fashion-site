@@ -74,18 +74,16 @@ body {
   top: 2.5rem;
   left: 3rem;
   font-family: var(--serif);
-  font-size: 24px;
+  font-size: 1.85rem;
   letter-spacing: 3px;
   color: var(--white);
-  font-weight: 400;
+  font-weight: 300;
   z-index: 10;
   opacity: 0;
   transform: translateY(-10px);
   animation: fadeUp 0.8s ease 0.2s forwards;
 }
 
-
-/* ── Glassmorphism Form Card ── */
 .right {
   position: relative;
   z-index: 10;
@@ -139,14 +137,12 @@ body {
   transition: transform 0.2s ease;
 }
 
-
 .form-wrap {
   position: relative;
   z-index: 1;
   width: 100%;
 }
 
-/* Form header */
 .form-tag {
   font-size: 10px;
   letter-spacing: 0.16em;
@@ -174,7 +170,6 @@ body {
   margin-bottom: 2.5rem;
 }
 
-/* Fields */
 .field {
   margin-bottom: 1.6rem;
   position: relative;
@@ -219,7 +214,6 @@ body {
   border-bottom-color: rgba(255, 255, 255, 0.6);
 }
 
-/* field underline animation */
 .field::after {
   content: "";
   position: absolute;
@@ -235,7 +229,6 @@ body {
   width: 100%;
 }
 
-/* Forgot */
 .forgot {
   display: block;
   text-align: right;
@@ -253,7 +246,6 @@ body {
   color: var(--muted-1);
 }
 
-/* Buttons */
 .btn-login {
   width: 100%;
   padding: 13px;
@@ -303,7 +295,6 @@ body {
   color: var(--muted-1);
 }
 
-/* Divider */
 .divider {
   display: flex;
   align-items: center;
@@ -325,7 +316,6 @@ body {
   font-weight: 400;
 }
 
-/* Sign up row */
 .signup-row {
   text-align: center;
   margin-top: 1.8rem;
@@ -357,7 +347,6 @@ body {
   border-bottom-color: rgba(255, 255, 255, 0.5);
 }
 
-/* Bottom left corner decoration */
 .corner-deco {
   position: absolute;
   bottom: 2rem;
@@ -368,7 +357,6 @@ body {
   color: var(--muted-3);
   font-weight: 300;
 }
-
 
 @keyframes fadeUp {
   to {

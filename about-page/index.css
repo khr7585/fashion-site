@@ -4,7 +4,6 @@
   position: relative;
 }
 
-/* soft overlay (NOT too dark) */
 .about-overlay {
   position: absolute;
   inset: 0;
@@ -14,7 +13,6 @@
   justify-content: center;
 }
 
-/* glass card */
 .about-box {
   /* height: 500px; */
   width: 400px;
@@ -25,7 +23,6 @@
   color: #fff;
 }
 
-/* back button */
 .back-btn {
   font-size: 12px;
   color: #ccc;
@@ -39,7 +36,6 @@
   color: #fff;
 }
 
-/* subtitle */
 .about-subtitle {
   font-size: 16px;
   letter-spacing: 3px;
@@ -47,22 +43,18 @@
   margin-bottom: 10px;
 }
 
-/* heading */
 .about-box h2 {
   font-size: 36px;
   font-weight: 500;
   margin-bottom: 15px;
 }
 
-/* text */
 .about-text {
   font-size: 18px;
   color: #ddd;
   line-height: 1.8;
   margin-bottom: 12px;
 }
-
-/* button */
 .about-btn {
   display: inline-block;
   margin-top: 20px;
@@ -76,7 +68,6 @@
   letter-spacing: 1px;
   transition: 0.3s;
 }
-
 .about-btn:hover {
   opacity: 0.8;
 }

@@ -29,7 +29,6 @@ body {
   overflow: hidden;
 }
 
-/* ── Full page background ── */
 .page {
   position: relative;
   height: 100vh;
@@ -53,14 +52,12 @@ body {
   transform: scale(1);
 }
 
-/* dark overlay across full image */
 .page-overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
 }
 
-/* bottom fade */
 .page-overlay-bottom {
   position: absolute;
   inset: 0;
@@ -68,23 +65,21 @@ body {
   z-index: 1;
 }
 
-/* ── Brand top-left ── */
 .brand {
   position: absolute;
   top: 2.5rem;
   left: 3rem;
   font-family: var(--serif);
-  font-size: 1.15rem;
-  letter-spacing: 0.22em;
+  font-size: 1.85rem;
+  letter-spacing: 3px;
   color: var(--white);
-  font-weight: 500;
+  font-weight: 300;
   z-index: 10;
   opacity: 0;
   transform: translateY(-10px);
   animation: fadeUp 0.8s ease 0.2s forwards;
 }
 
-/* ── Glassmorphism Form Card ── */
 .right {
   position: relative;
   z-index: 10;
@@ -144,7 +139,6 @@ body {
   width: 100%;
 }
 
-/* Form header */
 .form-tag {
   font-size: 10px;
   letter-spacing: 0.16em;
@@ -216,7 +210,6 @@ body {
   border-bottom-color: rgba(255, 255, 255, 0.6);
 }
 
-/* animated underline on focus */
 .field::after {
   content: "";
   position: absolute;
@@ -232,7 +225,6 @@ body {
   width: 100%;
 }
 
-/* Buttons */
 .btn-login {
   width: 100%;
   padding: 13px;
@@ -282,7 +274,6 @@ body {
   color: var(--muted-1);
 }
 
-/* Divider */
 .divider {
   display: flex;
   align-items: center;
@@ -304,7 +295,6 @@ body {
   font-weight: 400;
 }
 
-/* Sign up row */
 .signup-row {
   text-align: center;
   margin-top: 1.8rem;
@@ -336,7 +326,6 @@ body {
   border-bottom-color: rgba(255, 255, 255, 0.5);
 }
 
-/* Bottom left corner decoration */
 .corner-deco {
   position: absolute;
   bottom: 2rem;
@@ -348,7 +337,6 @@ body {
   font-weight: 300;
 }
 
-/* Animations */
 @keyframes fadeUp {
   to {
     opacity: 1;
@@ -356,7 +344,6 @@ body {
   }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .page {
     justify-content: center;
