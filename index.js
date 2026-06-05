@@ -14,6 +14,10 @@
     document.getElementById('cartContinueBtn').addEventListener('click', closeCart);
     document.getElementById('cartBackdrop').addEventListener('click', closeCart);
     
+const btn = document.getElementById("checkout");
+btn.addEventListener("mouseover", function() {
+    btn.disabled = true;
+});
 
 
 // function goto_login() {

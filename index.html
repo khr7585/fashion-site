@@ -73,8 +73,8 @@
           <span>Subtotal</span>
           <span id="cartSubtotal">$0.00</span>
         </div>
-        <button class="checkout-btn">PROCEED TO CHECKOUT</button>
-        <button class="continue-btn" id="cartContinueBtn">Continue Shopping</button>
+        <button id="checkout" class="checkout-btn">PROCEED TO CHECKOUT</button>
+        <a href="#Collection-page"><button class="continue-btn" id="cartContinueBtn" >Continue Shopping</button></a>
       </div>
     </div>
   </div>
@@ -247,7 +247,7 @@
       <h1>KHR</h1>
       <div class="footer-links">
         <a href="#Collection-page">COLLECTIONS </a>
-        <a href="#">CART</a>
+        <a href="#" onclick="openCart(event)">CART</a>
         <a href="./about-page/index.html">ABOUT</a>
       </div>
       <p class="credit">
