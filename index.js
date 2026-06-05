@@ -1,3 +1,21 @@
+ function goto_login(){
+      window.location.href="./login-page/index.html";
+    }
+    function openCart(e) {
+      if (e) e.preventDefault();
+      document.getElementById('cartOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCart() {
+      document.getElementById('cartOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('cartCloseBtn').addEventListener('click', closeCart);
+    document.getElementById('cartContinueBtn').addEventListener('click', closeCart);
+    document.getElementById('cartBackdrop').addEventListener('click', closeCart);
+    
+
+
 // function goto_login() {
 //   window.location.href = "../login-page/index.html";
 // }
