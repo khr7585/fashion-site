@@ -1,24 +1,9 @@
 function goto_login() {
   window.location.href = "./login-page/index.html";
 }
-function openCart(e) {
-  if (e) e.preventDefault();
-  document.getElementById("cartOverlay").classList.add("open");
-  document.body.style.overflow = "hidden";
+function openCart(){
+  window.location.href="./cart-page/index.html";
 }
-function closeCart() {
-  document.getElementById("cartOverlay").classList.remove("open");
-  document.body.style.overflow = "";
-}
-document.getElementById("cartCloseBtn").addEventListener("click", closeCart);
-document.getElementById("cartContinueBtn").addEventListener("click", closeCart);
-document.getElementById("cartBackdrop").addEventListener("click", closeCart);
-
-const btn = document.getElementById("checkout");
-btn.addEventListener("mouseover", function () {
-  btn.disabled = true;
-});
-
 const products = [
   {
     id: 1,
@@ -157,9 +142,13 @@ products.forEach((product) => {
         ${product.oldPrice ? `<span>${product.oldPrice}</span>` : ""}
       </p>
 
-      <button class="card-btn ${product.outOfStock ? "out-of-stock" : ""}">
-        ${product.outOfStock ? "Out of Stock" : "Add to Cart"}
-      </button>
+      <button
+  class="card-btn ${product.outOfStock ? "out-of-stock" : ""}"
+  onclick="addToCart(${product.id})"
+  ${product.outOfStock ? "disabled" : ""}
+>
+  ${product.outOfStock ? "Out of Stock" : "Add to Cart"}
+</button>
     </div>
   `;
 
