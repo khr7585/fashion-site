@@ -212,8 +212,9 @@ body {
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 28px;
+  row-gap: 70px;
 }
 
 .card {
@@ -377,6 +378,7 @@ body {
 }
 
 .footer {
+  margin-top: 40px;
   background: #000;
   color: #fff;
   text-align: center;
