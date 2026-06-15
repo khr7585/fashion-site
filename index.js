@@ -165,10 +165,9 @@ products.forEach((product) => {
 
   productGrid.appendChild(card);
 });
-
-// function openProduct(id) {
-//   window.location.href = `product.html?id=${id}`;
-// }
+function openProduct(id) {
+  window.location.href = `./product-page/product.html?id=${id}`;
+}
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyAv5wV8B3oW_yBtaOjCUbb83QWGQFPDXAE",

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Details</title>
+    <link rel="stylesheet" href="./product.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="back-row">
+        <button class="btn-back" onclick="goBack()">
+          &larr; Back to all products
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="layout">
+          <div class="gallery">
+            <span class="badge" id="badge"></span>
+            <button
+              class="heart"
+              id="heartBtn"
+              onclick="toggleWishlist()"
+              aria-label="Add to wishlist"
+            >
+              &#9825;
+            </button>
+            <img id="mainImage" src="" alt="" />
+            <!-- <div class="thumbs">
+          <button class="thumb active" onclick="setImage(this, '')"></button>
+          <button class="thumb" onclick="setImage(this, '')"></button>
+          <button class="thumb" onclick="setImage(this, '')"></button>
+        </div> -->
+          </div>
+
+          <div class="details">
+            <h1 class="product-title" id="productTitle"></h1>
+
+            <div class="rating">
+              <span class="stars">★★★★☆</span>
+              <span>4.3 (96 reviews)</span>
+            </div>
+
+            <div class="price-row">
+              <span class="price" id="price"></span>
+              <span class="price-old" id="oldPrice"></span>
+              <!-- <span class="discount">-29%</span> -->
+            </div>
+
+            <div>
+              <p class="section-label" id="colorLabel">Color: charcoal</p>
+              <div class="swatches">
+                <button
+                  class="swatch active"
+                  style="background: #2c2c2a"
+                  onclick="setColor(this, 'charcoal')"
+                  aria-label="Charcoal"
+                ></button>
+                <button
+                  class="swatch"
+                  style="background: #d9d3c4"
+                  onclick="setColor(this, 'sand')"
+                  aria-label="Sand"
+                ></button>
+                <button
+                  class="swatch"
+                  style="background: #3a4a5c"
+                  onclick="setColor(this, 'navy')"
+                  aria-label="Navy"
+                ></button>
+              </div>
+            </div>
+
+            <div>
+              <p class="section-label" id="sizeLabel">Size: M</p>
+              <div class="sizes">
+                <button class="size-btn" onclick="setSize(this, 'S')">S</button>
+                <button class="size-btn active" onclick="setSize(this, 'M')">
+                  M
+                </button>
+                <button class="size-btn" onclick="setSize(this, 'L')">L</button>
+                <button class="size-btn" onclick="setSize(this, 'XL')">
+                  XL
+                </button>
+                <button class="size-btn disabled" disabled>XXL</button>
+              </div>
+            </div>
+
+            <div>
+              <p class="section-label">Quantity</p>
+              <div class="qty-row">
+                <div class="qty-control">
+                  <button onclick="changeQty(-1)">&minus;</button>
+                  <span id="qtyValue">1</span>
+                  <button onclick="changeQty(1)">&plus;</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn-add" id="addBtn" onclick="addToCart()">
+                Add to cart
+              </button>
+            </div>
+
+            <p class="description" id="description"></p>
+
+            <p class="section-label">Details</p>
+            <ul class="meta-list" id="detailsList"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./product.js"></script>
+  </body>
+</html>
