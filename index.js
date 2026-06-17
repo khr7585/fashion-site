@@ -1,9 +1,31 @@
 function goto_login() {
   window.location.href = "./login-page/index.html";
 }
-function openCart(){
-  window.location.href="./cart-page/index.html";
+function back_to_shop() {
+  window.history.back();
 }
+
+// function openSearch(e) {
+//   if (e) e.preventDefault();
+//   document.getElementById("overlay").classList.add("open");
+//   document.body.style.overflow = "hidden";
+// }
+// function closeSearch() {
+//   document.getElementById("overlay").classList.remove("open");
+//   document.body.style.overflow = "";
+// }
+// document.getElementById("closeSearch").addEventListener("click", closeSearch);
+// document.getElementById("backdrop").addEventListener("click", closeSearch);
+
+const navbar = document.querySelector(".navbar");
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 50) {
+    navbar.classList.add("scrolled");
+  } else {
+    navbar.classList.remove("scrolled");
+  }
+});
+
 const products = [
   {
     id: 1,

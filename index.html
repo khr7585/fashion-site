@@ -23,19 +23,19 @@
   <body>
 
   <section class="hero">
-    <nav class="navbar">
+    <nav class="navbar scrolled">
       <div class="logo">KHR</div>
 <div class="nav-right">
       <ul class="nav-links">
-        <li><a href="#Collection-page">Collection</a></li>
+        <li><a href="#our-products">Collection</a></li>
         <li><a href="./about-page/index.html">About</a></li>
-        <li>Search</li>
+        <li><a href="#" id="open-search" onclick="openSearch(event)">Search</a></li>
       </ul>
       <div class="nav-bag">
         <button class="login" onclick="goto_login()">Login</button>
           <span ><a href="#" id="khr-open-cart" onclick="openCart(event)">👜</a></span>
         </div>
-         </div>
+        </div>
       </div>
 
     </nav>
@@ -74,12 +74,40 @@
           <span id="cartSubtotal">$0.00</span>
         </div>
         <button id="checkout" class="checkout-btn">PROCEED TO CHECKOUT</button>
-        <a href="#Collection-page"><button class="continue-btn" id="cartContinueBtn" >Continue Shopping</button></a>
+          <button class="continue-btn" id="cartContinueBtn" onclick="back_to_shop()" >Continue Shopping</button>
       </div>
     </div>
   </div>
 
-    <div class="our-products">
+
+<!-- <div class="search-overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Site search">
+  <div class="overlay-backdrop" id="backdrop"></div>
+  <div class="overlay-content">
+
+    <div class="overlay-top">
+      <span class="overlay-brand">KHR</span>
+      <button class="close-btn" id="closeSearch" aria-label="Close search">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+
+    <div class="search-field-wrap">
+      <input
+        class="search-field"
+        id="searchInput"
+        type="text"
+        placeholder="Search for anything…"
+        autocomplete="off"
+        aria-label="Search products"
+      />
+      <i class="fa fa-search field-icon"></i>
+    </div>
+
+  </div>
+</div> -->
+
+
+    <div class="our-products" id="our-products">
 <p class="section-label">Curated for you</p>
       Our Products
     </div>
