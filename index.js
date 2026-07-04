@@ -5,27 +5,31 @@ function back_to_shop() {
   window.history.back();
 }
 
-// function openSearch(e) {
-//   if (e) e.preventDefault();
-//   document.getElementById("overlay").classList.add("open");
-//   document.body.style.overflow = "hidden";
-// }
-// function closeSearch() {
-//   document.getElementById("overlay").classList.remove("open");
-//   document.body.style.overflow = "";
-// }
-// document.getElementById("closeSearch").addEventListener("click", closeSearch);
-// document.getElementById("backdrop").addEventListener("click", closeSearch);
+function openSearch(e) {
+  if (e) e.preventDefault();
+  document.getElementById("overlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeSearch() {
+  document.getElementById("overlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.getElementById("closeSearch").addEventListener("click", closeSearch);
+document.getElementById("backdrop").addEventListener("click", closeSearch);
 
 const navbar = document.querySelector(".navbar");
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 50) {
-    navbar.classList.add("scrolled");
-  } else {
+function handleNavbar() {
+  if (window.scrollY === 0) {
     navbar.classList.remove("scrolled");
+  } else {
+    navbar.classList.add("scrolled");
   }
+}
+window.addEventListener("scroll", handleNavbar);
+window.addEventListener("load", () => {
+  window.scrollTo(0, 0);
+  handleNavbar();
 });
-
 const products = [
   {
     id: 1,
