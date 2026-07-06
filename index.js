@@ -193,3 +193,99 @@ function openProduct(id) {
 //   appId: "1:862721379399:web:3ec81f51565e1cc6197562",
 //   measurementId: "G-QZBJX9YVYB"
 // };
+
+
+
+
+
+
+
+let checkoutData = { address: null, cart: [] }; // populate cart from your existing cart state
+
+document.getElementById('proceedToCheckoutBtn').addEventListener('click', () => {
+  document.getElementById('checkoutModal').style.display = 'flex';
+  showStep('address');
+});
+
+document.getElementById('closeCheckout').addEventListener('click', () => {
+  document.getElementById('checkoutModal').style.display = 'none';
+});
+
+function showStep(step) {
+  document.querySelectorAll('.checkout-step').forEach(el => el.style.display = 'none');
+  document.getElementById(`step-${step}`).style.display = 'block';
+  const labels = { address: 'Shipping Address', summary: 'Order Summary', payment: 'Payment' };
+  document.getElementById('checkoutStepLabel').textContent = labels[step];
+}
+
+document.getElementById('addressForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const form = new FormData(e.target);
+  checkoutData.address = Object.fromEntries(form.entries());
+  renderSummary();
+  showStep('summary');
+});
+
+document.getElementById('backToAddress').addEventListener('click', () => showStep('address'));
+
+function renderSummary() {
+  const container = document.getElementById('summaryItems');
+  container.innerHTML = '';
+  let subtotal = 0;
+  checkoutData.cart.forEach(item => {
+    subtotal += item.price * item.qty;
+    container.innerHTML += `
+      <div class="summary-row">
+        <span>${item.name} x${item.qty}</span>
+        <span>$${(item.price * item.qty).toFixed(2)}</span>
+      </div>`;
+  });
+  document.getElementById('summarySubtotal').textContent = `$${subtotal.toFixed(2)}`;
+  document.getElementById('summaryTotal').textContent = `$${subtotal.toFixed(2)}`;
+  checkoutData.total = subtotal;
+}
+
+document.getElementById('proceedToPayment').addEventListener('click', () => showStep('payment'));
+
+document.getElementById('payNowBtn').addEventListener('click', async () => {
+  // 1. Ask your backend to create a Razorpay order
+  const res = await fetch('/api/create-order', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ amount: checkoutData.total, currency: 'INR' })
+  });
+  const order = await res.json();
+
+  // 2. Open Razorpay checkout
+  const rzp = new Razorpay({
+    key: 'YOUR_RAZORPAY_KEY_ID', // public key only, never the secret
+    amount: order.amount,
+    currency: order.currency,
+    name: 'KHR',
+    description: 'Order Payment',
+    order_id: order.id,
+    handler: async function (response) {
+      // 3. Verify payment on your backend
+      const verifyRes = await fetch('/api/verify-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...response,
+          address: checkoutData.address,
+          cart: checkoutData.cart
+        })
+      });
+      const result = await verifyRes.json();
+      if (result.success) {
+        document.getElementById('checkoutModal').style.display = 'none';
+        alert('Order placed successfully!');
+      }
+    },
+    prefill: {
+      name: checkoutData.address.fullName,
+      contact: checkoutData.address.phone
+    },
+    theme: { color: '#000000' }
+  });
+  rzp.open();
+});

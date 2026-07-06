@@ -73,11 +73,63 @@
           <span>Subtotal</span>
           <span id="cartSubtotal">$0.00</span>
         </div>
-        <button id="checkout" class="checkout-btn">PROCEED TO CHECKOUT</button>
+        <button id="proceedToCheckoutBtn" class="checkout-btn">PROCEED TO CHECKOUT</button>
           <button class="continue-btn" id="cartContinueBtn" onclick="back_to_shop()" >Continue Shopping</button>
       </div>
     </div>
   </div>
+
+
+
+<!-- Checkout Modal -->
+<div id="checkoutModal" class="checkout-overlay" style="display:none;">
+  <div class="checkout-panel">
+    <div class="checkout-header">
+      <span id="checkoutStepLabel">Shipping Address</span>
+      <button id="closeCheckout" class="checkout-close">&times;</button>
+    </div>
+
+    <!-- Step 1: Address -->
+    <div id="step-address" class="checkout-step">
+      <form id="addressForm">
+        <input type="text" name="fullName" placeholder="Full Name" required>
+        <input type="tel" name="phone" placeholder="Phone Number" required pattern="[0-9]{10}">
+        <input type="text" name="line1" placeholder="Address Line 1" required>
+        <input type="text" name="line2" placeholder="Address Line 2 (optional)">
+        <div class="form-row">
+          <input type="text" name="city" placeholder="City" required>
+          <input type="text" name="state" placeholder="State" required>
+        </div>
+        <div class="form-row">
+          <input type="text" name="pincode" placeholder="Pincode" required pattern="[0-9]{6}">
+          <input type="text" name="country" value="India" readonly>
+        </div>
+        <button type="submit" class="checkout-btn">Continue to Summary</button>
+      </form>
+    </div>
+
+    <!-- Step 2: Order Summary -->
+    <div id="step-summary" class="checkout-step" style="display:none;">
+      <div id="summaryItems"></div>
+      <div class="summary-row"><span>Subtotal</span><span id="summarySubtotal">$0.00</span></div>
+      <div class="summary-row"><span>Shipping</span><span>Free</span></div>
+      <div class="summary-row total"><span>Total</span><span id="summaryTotal">$0.00</span></div>
+      <button id="backToAddress" class="checkout-btn-outline">Back</button>
+      <button id="proceedToPayment" class="checkout-btn">Proceed to Payment</button>
+    </div>
+
+    <!-- Step 3: Payment (triggers Razorpay) -->
+    <div id="step-payment" class="checkout-step" style="display:none;">
+      <p class="payment-note">You'll be redirected to Razorpay's secure checkout.</p>
+      <button id="payNowBtn" class="checkout-btn">Pay Now</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
 
 
 <div class="search-overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Site search">
@@ -128,5 +180,7 @@
     </footer>
     <script src="./index.js"></script>
   <script src="./cart-page/index.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
   </body>
 </html>
