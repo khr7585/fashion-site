@@ -203,6 +203,8 @@ function openProduct(id) {
 let checkoutData = { address: null, cart: [] }; // populate cart from your existing cart state
 
 document.getElementById('proceedToCheckoutBtn').addEventListener('click', () => {
+  closeCart();
+  checkoutData.cart = cart;
   document.getElementById('checkoutModal').style.display = 'flex';
   showStep('address');
 });
@@ -233,11 +235,12 @@ function renderSummary() {
   container.innerHTML = '';
   let subtotal = 0;
   checkoutData.cart.forEach(item => {
-    subtotal += item.price * item.qty;
+    const price = parseFloat(item.price.replace('$', ''));
+    subtotal += price * item.quantity;
     container.innerHTML += `
       <div class="summary-row">
-        <span>${item.name} x${item.qty}</span>
-        <span>$${(item.price * item.qty).toFixed(2)}</span>
+        <span>${item.name} x${item.quantity}</span>
+        <span>$${(price * item.quantity).toFixed(2)}</span>
       </div>`;
   });
   document.getElementById('summarySubtotal').textContent = `$${subtotal.toFixed(2)}`;
@@ -248,17 +251,36 @@ function renderSummary() {
 document.getElementById('proceedToPayment').addEventListener('click', () => showStep('payment'));
 
 document.getElementById('payNowBtn').addEventListener('click', async () => {
-  // 1. Ask your backend to create a Razorpay order
-  const res = await fetch('/api/create-order', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ amount: checkoutData.total, currency: 'INR' })
-  });
-  const order = await res.json();
+  try {
+    const res = await fetch('http://localhost:3000/api/create-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: checkoutData.total, currency: 'INR' })
+    });
+    if (!res.ok) throw new Error('Order creation failed');
+    const order = await res.json();
+    // ... rest stays the same
+  } catch (err) {
+    console.error('Payment error:', err);
+    alert('Something went wrong. Please try again.');
+  }
+});
+
+
+// document.getElementById('payNowBtn').addEventListener('click', async () => {
+//   try{
+
+//   }
+//   // 1. Ask your backend to create a Razorpay order
+//   const res = await fetch('http://localhost:3000/api/create-order', {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({ amount: checkoutData.total, currency: 'INR' })
+//   });
+//   const order = await res.json();
 
   // 2. Open Razorpay checkout
   const rzp = new Razorpay({
-    key: 'YOUR_RAZORPAY_KEY_ID', // public key only, never the secret
     amount: order.amount,
     currency: order.currency,
     name: 'KHR',
@@ -266,7 +288,7 @@ document.getElementById('payNowBtn').addEventListener('click', async () => {
     order_id: order.id,
     handler: async function (response) {
       // 3. Verify payment on your backend
-      const verifyRes = await fetch('/api/verify-payment', {
+      const verifyRes = await fetch('https://localhost:3000/api/verify-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -288,4 +310,4 @@ document.getElementById('payNowBtn').addEventListener('click', async () => {
     theme: { color: '#000000' }
   });
   rzp.open();
-});
+// });

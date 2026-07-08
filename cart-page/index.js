@@ -11,10 +11,10 @@ document.getElementById("cartCloseBtn").addEventListener("click", closeCart);
 document.getElementById("cartContinueBtn").addEventListener("click", closeCart);
 document.getElementById("cartBackdrop").addEventListener("click", closeCart);
 
-const btn = document.getElementById("checkout");
-btn.addEventListener("mouseover", function () {
-  btn.disabled = true;
-});
+// const btn = document.getElementById("checkout");
+// btn.addEventListener("mouseover", function () {
+//   btn.disabled = true;
+// });
 
 let cart = [];
 function addToCart(productId) {
