@@ -184,58 +184,52 @@ function openProduct(id) {
   window.location.href = `./product-page/product.html?id=${id}`;
 }
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyAv5wV8B3oW_yBtaOjCUbb83QWGQFPDXAE",
-//   authDomain: "fashion-site-c7a4d.firebaseapp.com",
-//   projectId: "fashion-site-c7a4d",
-//   storageBucket: "fashion-site-c7a4d.firebasestorage.app",
-//   messagingSenderId: "862721379399",
-//   appId: "1:862721379399:web:3ec81f51565e1cc6197562",
-//   measurementId: "G-QZBJX9YVYB"
-// };
-
-
-
-
-
-
-
 let checkoutData = { address: null, cart: [] }; // populate cart from your existing cart state
 
-document.getElementById('proceedToCheckoutBtn').addEventListener('click', () => {
-  closeCart();
-  checkoutData.cart = cart;
-  document.getElementById('checkoutModal').style.display = 'flex';
-  showStep('address');
-});
+document
+  .getElementById("proceedToCheckoutBtn")
+  .addEventListener("click", () => {
+    closeCart();
+    checkoutData.cart = cart;
+    document.getElementById("checkoutModal").style.display = "flex";
+    showStep("address");
+  });
 
-document.getElementById('closeCheckout').addEventListener('click', () => {
-  document.getElementById('checkoutModal').style.display = 'none';
+document.getElementById("closeCheckout").addEventListener("click", () => {
+  document.getElementById("checkoutModal").style.display = "none";
 });
 
 function showStep(step) {
-  document.querySelectorAll('.checkout-step').forEach(el => el.style.display = 'none');
-  document.getElementById(`step-${step}`).style.display = 'block';
-  const labels = { address: 'Shipping Address', summary: 'Order Summary', payment: 'Payment' };
-  document.getElementById('checkoutStepLabel').textContent = labels[step];
+  document
+    .querySelectorAll(".checkout-step")
+    .forEach((el) => (el.style.display = "none"));
+  document.getElementById(`step-${step}`).style.display = "block";
+  const labels = {
+    address: "Shipping Address",
+    summary: "Order Summary",
+    payment: "Payment",
+  };
+  document.getElementById("checkoutStepLabel").textContent = labels[step];
 }
 
-document.getElementById('addressForm').addEventListener('submit', (e) => {
+document.getElementById("addressForm").addEventListener("submit", (e) => {
   e.preventDefault();
   const form = new FormData(e.target);
   checkoutData.address = Object.fromEntries(form.entries());
   renderSummary();
-  showStep('summary');
+  showStep("summary");
 });
 
-document.getElementById('backToAddress').addEventListener('click', () => showStep('address'));
+document
+  .getElementById("backToAddress")
+  .addEventListener("click", () => showStep("address"));
 
 function renderSummary() {
-  const container = document.getElementById('summaryItems');
-  container.innerHTML = '';
+  const container = document.getElementById("summaryItems");
+  container.innerHTML = "";
   let subtotal = 0;
-  checkoutData.cart.forEach(item => {
-    const price = parseFloat(item.price.replace('$', ''));
+  checkoutData.cart.forEach((item) => {
+    const price = parseFloat(item.price.replace("$", ""));
     subtotal += price * item.quantity;
     container.innerHTML += `
       <div class="summary-row">
@@ -243,71 +237,64 @@ function renderSummary() {
         <span>$${(price * item.quantity).toFixed(2)}</span>
       </div>`;
   });
-  document.getElementById('summarySubtotal').textContent = `$${subtotal.toFixed(2)}`;
-  document.getElementById('summaryTotal').textContent = `$${subtotal.toFixed(2)}`;
+  document.getElementById("summarySubtotal").textContent =
+    `$${subtotal.toFixed(2)}`;
+  document.getElementById("summaryTotal").textContent =
+    `$${subtotal.toFixed(2)}`;
   checkoutData.total = subtotal;
 }
 
-document.getElementById('proceedToPayment').addEventListener('click', () => showStep('payment'));
+document
+  .getElementById("proceedToPayment")
+  .addEventListener("click", () => showStep("payment"));
 
-document.getElementById('payNowBtn').addEventListener('click', async () => {
+document.getElementById("payNowBtn").addEventListener("click", async () => {
+  let order = null;
   try {
-    const res = await fetch('http://localhost:3000/api/create-order', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: checkoutData.total, currency: 'INR' })
+    const res = await fetch("http://localhost:3000/api/create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: checkoutData.total, currency: "INR" }),
     });
-    if (!res.ok) throw new Error('Order creation failed');
-    const order = await res.json();
-    // ... rest stays the same
+    if (!res.ok) throw new Error("Order creation failed");
+    order = await res.json();
+    console.log(order);
   } catch (err) {
-    console.error('Payment error:', err);
-    alert('Something went wrong. Please try again.');
+    console.error("Payment error:", err);
+    alert("Something went wrong. Please try again.");
   }
-});
 
-
-// document.getElementById('payNowBtn').addEventListener('click', async () => {
-//   try{
-
-//   }
-//   // 1. Ask your backend to create a Razorpay order
-//   const res = await fetch('http://localhost:3000/api/create-order', {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ amount: checkoutData.total, currency: 'INR' })
-//   });
-//   const order = await res.json();
-
-  // 2. Open Razorpay checkout
   const rzp = new Razorpay({
+    key: "rzp_test_TAokbyzSsNmcaF",
     amount: order.amount,
     currency: order.currency,
-    name: 'KHR',
-    description: 'Order Payment',
+    name: "KHR",
+    description: "Order Payment",
     order_id: order.id,
     handler: async function (response) {
-      // 3. Verify payment on your backend
-      const verifyRes = await fetch('https://localhost:3000/api/verify-payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...response,
-          address: checkoutData.address,
-          cart: checkoutData.cart
-        })
-      });
+      const verifyRes = await fetch(
+        "http://localhost:3000/api/verify-payment",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...response,
+            address: checkoutData.address,
+            cart: checkoutData.cart,
+          }),
+        },
+      );
       const result = await verifyRes.json();
       if (result.success) {
-        document.getElementById('checkoutModal').style.display = 'none';
-        alert('Order placed successfully!');
+        document.getElementById("checkoutModal").style.display = "none";
+        alert("Order placed successfully!");
       }
     },
     prefill: {
       name: checkoutData.address.fullName,
-      contact: checkoutData.address.phone
+      contact: checkoutData.address.phone,
     },
-    theme: { color: '#000000' }
+    theme: { color: "#000000" },
   });
   rzp.open();
-// });
+});
