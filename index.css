@@ -425,109 +425,180 @@ body {
 .search-overlay {
   position: fixed;
   inset: 0;
-  z-index: 100;
+  z-index: 9999;
   display: flex;
-  flex-direction: column;
-  padding: 0;
+  justify-content: center;
+  visibility: hidden;
   opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  /* background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px); */
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
 }
+
 .search-overlay.open {
+  visibility: visible;
   opacity: 1;
-  pointer-events: all;
 }
 
 .overlay-backdrop {
   position: absolute;
   inset: 0;
-  backdrop-filter: blur(6px);
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(10px);
 }
 
 .overlay-content {
   position: relative;
-  z-index: 2;
+  width: 100%;
+  max-width: 700px;
+  height: 100%;
+  padding: 60px 24px 40px;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 1.25rem 2.5rem 2rem;
+  overflow-y: auto;
 }
 
 .overlay-top {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  height: 64px;
-  flex-shrink: 0;
-}
-.overlay-brand {
-  font-size: 20px;
-  letter-spacing: 0.14em;
-  color: #fff;
-  font-family: "Playfair Display", serif;
-}
-.close-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 0.5px solid rgba(255, 255, 255, 0.22);
-  background: transparent;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 16px;
-  cursor: pointer;
-  display: flex;
   align-items: center;
-  justify-content: center;
-  transition:
-    background 0.2s,
-    border-color 0.2s;
+  margin-bottom: 40px;
 }
-.close-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.45);
+
+.overlay-brand {
+  font-family: "Playfair Display", serif;
+  color: #fff;
+  font-size: 1.3rem;
+  letter-spacing: 0.15em;
+}
+
+.overlay-top .close-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.overlay-top .close-btn:hover {
+  color: #fff;
 }
 
 .search-field-wrap {
   position: relative;
-  margin-top: 1.75rem;
-  margin-bottom: 2.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 12px;
 }
+
 .search-field {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1.5px solid rgba(255, 255, 255, 0.28);
-  color: #fff;
-  font-size: clamp(22px, 4vw, 36px);
-  font-family: "Georgia", serif;
-  font-style: italic;
-  padding: 0.4rem 2.5rem 0.6rem 0;
   outline: none;
-  letter-spacing: 0.01em;
-  transition: border-color 0.25s;
+  color: #fff;
+  font-family: "Playfair Display", "Georgia", serif;
+  font-style: italic;
+  font-size: 1.6rem;
+  padding-right: 30px;
 }
+
 .search-field::placeholder {
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.4);
 }
-.search-field:focus {
-  border-bottom-color: rgba(255, 255, 255, 0.65);
-}
+
 .field-icon {
   position: absolute;
-  right: 0;
-  bottom: 0.9rem;
-  color: rgba(255, 255, 255, 0.35);
-  font-size: 18px;
-  transition: color 0.2s;
+  right: 4px;
+  top: 6px;
+  color: rgba(255, 255, 255, 0.6);
 }
-.search-field:focus ~ .field-icon {
-  color: rgba(255, 255, 255, 0.65);
+
+.search-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.search-chip {
+  padding: 6px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  background: transparent;
+  color: #eee;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.search-chip:hover,
+.search-chip.active {
+  background: #fff;
+  color: #111;
+  border-color: #fff;
+}
+
+.search-results {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.search-result-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.search-result-item img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.search-result-info h4 {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0 0 4px;
+}
+
+.search-result-info p {
+  font-family: "Montserrat", sans-serif;
+  color: #bbb;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.search-result-info mark {
+  background: transparent;
+  color: #d4af37;
+  font-style: normal;
+}
+
+.search-empty {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  color: #999;
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 1.1rem;
 }
 
 .checkout-overlay {

@@ -1,22 +1,11 @@
+const API_URL = "http://localhost:3000";
 function goto_login() {
   window.location.href = "./login-page/index.html";
 }
 function back_to_shop() {
   window.history.back();
 }
-
-function openSearch(e) {
-  if (e) e.preventDefault();
-  document.getElementById("overlay").classList.add("open");
-  document.body.style.overflow = "hidden";
-}
-function closeSearch() {
-  document.getElementById("overlay").classList.remove("open");
-  document.body.style.overflow = "";
-}
-document.getElementById("closeSearch").addEventListener("click", closeSearch);
-document.getElementById("backdrop").addEventListener("click", closeSearch);
-
+//NAVABAR START
 const navbar = document.querySelector(".navbar");
 function handleNavbar() {
   if (window.scrollY === 0) {
@@ -26,10 +15,10 @@ function handleNavbar() {
   }
 }
 window.addEventListener("scroll", handleNavbar);
-window.addEventListener("load", () => {
-  window.scrollTo(0, 0);
-  handleNavbar();
-});
+window.addEventListener("load", handleNavbar);
+//NAVBAR END
+
+//PRODUCTS START
 const products = [
   {
     id: 1,
@@ -183,7 +172,122 @@ products.forEach((product) => {
 function openProduct(id) {
   window.location.href = `./product-page/product.html?id=${id}`;
 }
+//PRODUCTS END
 
+//SEARCH PART START
+function openSearch(e) {
+  if (e) e.preventDefault();
+  document.getElementById("overlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeSearch() {
+  document.getElementById("overlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.getElementById("closeSearch").addEventListener("click", closeSearch);
+document.getElementById("backdrop").addEventListener("click", closeSearch);
+const CATEGORY_RULES = [
+  { label: "Watches", test: (n) => /watch|chrono/i.test(n) },
+  { label: "Shirts", test: (n) => /shirt/i.test(n) },
+  { label: "T-Shirts", test: (n) => /t-?shirt|tee/i.test(n) },
+  { label: "Pants", test: (n) => /jogger|trouser|pant|bottom/i.test(n) },
+  { label: "Shoes", test: (n) => /shoe|kicks|sneaker/i.test(n) },
+];
+
+function getCategories(product) {
+  return CATEGORY_RULES.filter((c) => c.test(product.name)).map((c) => c.label);
+}
+
+const searchInput = document.getElementById("searchInput");
+const searchChips = document.getElementById("searchChips");
+const searchResults = document.getElementById("searchResults");
+
+let activeCategory = null;
+
+function renderChips() {
+  const present = new Set();
+  products.forEach((p) => getCategories(p).forEach((c) => present.add(c)));
+
+  searchChips.innerHTML = "";
+  present.forEach((label) => {
+    const chip = document.createElement("button");
+    chip.className =
+      "search-chip" + (activeCategory === label ? " active" : "");
+    chip.textContent = label;
+    chip.addEventListener("click", () => {
+      activeCategory = activeCategory === label ? null : label;
+      renderChips();
+      runSearch();
+    });
+    searchChips.appendChild(chip);
+  });
+}
+
+function highlightMatch(name, query) {
+  if (!query) return name;
+  const regex = new RegExp(
+    `(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+    "ig",
+  );
+  return name.replace(regex, "<mark>$1</mark>");
+}
+
+function runSearch() {
+  const query = searchInput.value.trim().toLowerCase();
+
+  let matches = products.filter((p) => {
+    const nameMatch = p.name.toLowerCase().includes(query);
+    const categoryMatch = activeCategory
+      ? getCategories(p).includes(activeCategory)
+      : true;
+    return nameMatch && categoryMatch;
+  });
+
+  searchResults.innerHTML = "";
+
+  if (!query && !activeCategory) {
+    return;
+  }
+
+  if (matches.length === 0) {
+    searchResults.innerHTML = `<div class="search-empty">No products found${query ? ` for "${searchInput.value}"` : ""}.</div>`;
+    return;
+  }
+
+  matches.forEach((p) => {
+    const item = document.createElement("div");
+    item.className = "search-result-item";
+    item.innerHTML = `
+      <img src="${p.image}" alt="${p.name}">
+      <div class="search-result-info">
+        <h4>${highlightMatch(p.name, query)}</h4>
+        <p>${p.price}</p>
+      </div>
+    `;
+    item.addEventListener("click", () => openProduct(p.id));
+    searchResults.appendChild(item);
+  });
+}
+
+searchInput.addEventListener("input", runSearch);
+renderChips();
+
+function openSearch(e) {
+  if (e) e.preventDefault();
+
+  const target = document.getElementById("our-products");
+  if (target) {
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  setTimeout(() => {
+    document.getElementById("overlay").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }, 400);
+}
+//SEARCH PART END
+
+//RAZORPAY START
 let checkoutData = { address: null, cart: [] }; // populate cart from your existing cart state
 
 document
@@ -251,7 +355,7 @@ document
 document.getElementById("payNowBtn").addEventListener("click", async () => {
   let order = null;
   try {
-    const res = await fetch("http://localhost:3000/api/create-order", {
+    const res = await fetch(`${API_URL}/api/create-order`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount: checkoutData.total, currency: "INR" }),
@@ -272,18 +376,15 @@ document.getElementById("payNowBtn").addEventListener("click", async () => {
     description: "Order Payment",
     order_id: order.id,
     handler: async function (response) {
-      const verifyRes = await fetch(
-        "http://localhost:3000/api/verify-payment",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...response,
-            address: checkoutData.address,
-            cart: checkoutData.cart,
-          }),
-        },
-      );
+      const verifyRes = await fetch(`${API_URL}/api/verify-payment`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...response,
+          address: checkoutData.address,
+          cart: checkoutData.cart,
+        }),
+      });
       const result = await verifyRes.json();
       if (result.success) {
         document.getElementById("checkoutModal").style.display = "none";
@@ -298,3 +399,4 @@ document.getElementById("payNowBtn").addEventListener("click", async () => {
   });
   rzp.open();
 });
+//RAZORPAY END
