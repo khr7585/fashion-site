@@ -400,3 +400,74 @@ document.getElementById("payNowBtn").addEventListener("click", async () => {
   rzp.open();
 });
 //RAZORPAY END
+
+//CONTACT START
+const contactDrawer = document.getElementById("contactDrawer");
+const contactBackdrop = document.getElementById("contactBackdrop");
+
+function openContactDrawer() {
+  contactDrawer.classList.add("open");
+  contactBackdrop.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeContactDrawer() {
+  contactDrawer.classList.remove("open");
+  contactBackdrop.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+document.getElementById("contactTrigger")?.addEventListener("click", (e) => {
+  e.preventDefault();
+  openContactDrawer();
+});
+
+document
+  .getElementById("closeContactDrawer")
+  .addEventListener("click", closeContactDrawer);
+contactBackdrop.addEventListener("click", closeContactDrawer);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeContactDrawer();
+});
+
+const CONTACT_API_URL = "http://localhost:3000/api/contact";
+
+document.getElementById("contactForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const submitBtn = document.getElementById("submitBtn");
+  const status = document.getElementById("formStatus");
+
+  const payload = {
+    name: document.getElementById("name").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    reason: document.getElementById("reason").value,
+    message: document.getElementById("message").value.trim(),
+  };
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "SENDING...";
+  status.textContent = "";
+  status.className = "form-status";
+
+  try {
+    const res = await fetch(CONTACT_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Something went wrong");
+
+    status.textContent = "Message sent — we'll get back to you soon.";
+    status.classList.add("success");
+    document.getElementById("contactForm").reset();
+  } catch (err) {
+    status.textContent = err.message || "Couldn't send message. Try again.";
+    status.classList.add("error");
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "SEND MESSAGE";
+  }
+});
+//CONTACT END
