@@ -81,7 +81,6 @@ body {
 .nav-links li a {
   text-decoration: none;
   color: #fff;
-  scroll-behavior: smooth;
 }
 
 .nav-right {
@@ -153,14 +152,11 @@ body {
   display: inline-block;
   padding: 12px 28px;
   color: #fff;
-  background: transparent;
-  border: 1.5px solid rgba(255, 255, 255, 0.8);
   text-decoration: none;
   font-size: 14px;
   letter-spacing: 2px;
   transition: all 0.3s ease;
   background: #000;
-  color: #fff;
   border: none;
 }
 
@@ -221,7 +217,6 @@ body {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  transition: 0.4s;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -232,7 +227,6 @@ body {
 }
 
 .card:hover {
-  transform: translateY(-6px);
   transform: translateY(-3px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
