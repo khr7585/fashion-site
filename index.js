@@ -7,7 +7,7 @@ async function checkAuthState() {
     const res = await fetch(`${AUTH_API_BASE}/me`, { credentials: "include" });
     if (res.ok) {
       const { user } = await res.json();
-      loginBtn.textContent = `Logout (${user.name})`;
+      loginBtn.textContent ="Logout";
       loginBtn.setAttribute("onclick", "logout()");
     }
   } catch (e) {

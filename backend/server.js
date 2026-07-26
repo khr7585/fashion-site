@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const authRoutes = require("./routes/auth");
+const { sendEmail } = require("./utils/sendEmail");
 const app = express();
 app.use(
   cors({
