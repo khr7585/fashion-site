@@ -6,7 +6,8 @@ const mongoose = require("mongoose");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const authRoutes = require("./routes/auth");
-const { sendEmail } = require("./utils/sendEmail");
+const { sendEmail } = require("./utils/sendemail");
+const verifyToken=require("./middleware/verifytoken")
 const app = express();
 app.use(
   cors({
@@ -25,7 +26,7 @@ const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
-app.post("/api/create-order", async (req, res) => {
+app.post("/api/create-order",verifyToken, async (req, res) => {
   try {
     const { amount, currency } = req.body;
     const order = await razorpay.orders.create({
@@ -39,7 +40,7 @@ app.post("/api/create-order", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-app.post("/api/verify-payment", (req, res) => {
+app.post("/api/verify-payment",verifyToken, (req, res) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
     req.body;
   const generated = crypto

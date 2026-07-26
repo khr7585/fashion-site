@@ -1,3 +1,11 @@
+const API_URL = "http://localhost:3000";
+function goto_login() {
+  window.location.href = "./login-page/index.html";
+}
+function back_to_shop() {
+  window.history.back();
+}
+
 //AUTH START
 const AUTH_API_BASE = "http://localhost:3000/api/auth";
 async function checkAuthState() {
@@ -7,7 +15,7 @@ async function checkAuthState() {
     const res = await fetch(`${AUTH_API_BASE}/me`, { credentials: "include" });
     if (res.ok) {
       const { user } = await res.json();
-      loginBtn.textContent ="Logout";
+      loginBtn.textContent = "Logout";
       loginBtn.setAttribute("onclick", "logout()");
     }
   } catch (e) {
@@ -29,13 +37,6 @@ async function logout() {
 checkAuthState();
 // END AUTH
 
-const API_URL = "http://localhost:3000";
-function goto_login() {
-  window.location.href = "./login-page/index.html";
-}
-function back_to_shop() {
-  window.history.back();
-}
 //NAVABAR START
 const navbar = document.querySelector(".navbar");
 function handleNavbar() {
@@ -389,8 +390,14 @@ document.getElementById("payNowBtn").addEventListener("click", async () => {
     const res = await fetch(`${API_URL}/api/create-order`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ amount: checkoutData.total, currency: "INR" }),
     });
+    if (res.status === 401) {
+      alert("Please log in to complete your purchase.");
+      window.location.href = "./login-page/index.html";
+      return;
+    }
     if (!res.ok) throw new Error("Order creation failed");
     order = await res.json();
     console.log(order);
@@ -410,6 +417,7 @@ document.getElementById("payNowBtn").addEventListener("click", async () => {
       const verifyRes = await fetch(`${API_URL}/api/verify-payment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials:"include",
         body: JSON.stringify({
           ...response,
           address: checkoutData.address,
