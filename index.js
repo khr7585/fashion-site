@@ -1,3 +1,37 @@
+// ── AUTH STATE CHECK (new) ──────────────────────────────
+const AUTH_API_BASE = "http://localhost:3000/api/auth";
+
+async function checkAuthState() {
+  const loginBtn = document.querySelector(".login");
+  if (!loginBtn) return;
+
+  try {
+    const res = await fetch(`${AUTH_API_BASE}/me`, { credentials: "include" });
+    if (res.ok) {
+      const { user } = await res.json();
+      loginBtn.textContent = `Logout (${user.name})`;
+      loginBtn.setAttribute("onclick", "logout()");
+    }
+  } catch (e) {
+    console.error("Auth check failed:", e.message);
+  }
+}
+
+async function logout() {
+  try {
+    await fetch(`${AUTH_API_BASE}/logout`, { method: "POST", credentials: "include" });
+  } catch (e) {
+    console.error("Logout error:", e.message);
+  } finally {
+    window.location.reload();
+  }
+}
+
+checkAuthState();
+// ── END AUTH STATE CHECK ─────────────────────────────────
+
+
+
 const API_URL = "http://localhost:3000";
 function goto_login() {
   window.location.href = "./login-page/index.html";

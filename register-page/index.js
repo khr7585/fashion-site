@@ -1,31 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  updateProfile,
-  onAuthStateChanged,
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+const API_BASE = "http://localhost:3000/api/auth";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAv5wV8B3oW_yBtaOjCUbb83QWGQFPDXAE",
-  authDomain: "fashion-site-c7a4d.firebaseapp.com",
-  projectId: "fashion-site-c7a4d",
-  storageBucket: "fashion-site-c7a4d.firebasestorage.app",
-  messagingSenderId: "862721379399",
-  appId: "1:862721379399:web:3ec81f51565e1cc6197562",
-  measurementId: "G-QZBJX9YVYB",
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-// ── If already logged in, skip register page ──────────
-// onAuthStateChanged(auth, (user) => {
-//   if (user) window.location.href = "../index.html";
-// });
-
-// ── Password strength checker ─────────────────────────
-// Must be on window so inline oninput="checkStrength(...)" can reach it
 window.checkStrength = function (val) {
   let bar = document.getElementById("strengthBar");
   if (!bar) {
@@ -59,7 +33,6 @@ window.checkStrength = function (val) {
   bar.style.background = levels[score - 1]?.color || "#e53e3e";
 };
 
-// ── Error/success message helper ──────────────────────
 function showMessage(msg, isSuccess = false) {
   let el = document.getElementById("authMsg");
   if (!el) {
@@ -73,19 +46,6 @@ function showMessage(msg, isSuccess = false) {
   el.textContent = msg;
 }
 
-// ── Friendly Firebase error messages ──────────────────
-function friendlyError(code) {
-  const map = {
-    "auth/email-already-in-use": "An account with this email already exists.",
-    "auth/invalid-email": "Invalid email address.",
-    "auth/weak-password": "Password must be at least 6 characters.",
-    "auth/network-request-failed": "Network error. Check your connection.",
-    "auth/too-many-requests": "Too many attempts. Try again later.",
-  };
-  return map[code] || "Something went wrong. Please try again.";
-}
-
-// ── type="module" is already deferred — DOM is ready here ──
 const btn = document.querySelector(".btn-login");
 
 btn.addEventListener("click", async () => {
@@ -115,22 +75,34 @@ btn.addEventListener("click", async () => {
   btn.disabled = true;
 
   try {
-    const cred = await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(cred.user, { displayName: name });
+    const res = await fetch(`${API_BASE}/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ name, email, password }),
+    });
 
-    showMessage(`Welcome, ${name}! Redirecting...`, true);
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Signup failed.");
+    }
+
+    showMessage(
+      `Welcome, ${name}! Check your email to verify your account. Redirecting...`,
+      true
+    );
 
     setTimeout(() => {
       window.location.href = "../index.html";
-    }, 1500);
+    }, 2000);
   } catch (e) {
     btn.textContent = "CREATE ACCOUNT";
     btn.disabled = false;
-    showMessage(friendlyError(e.code));
+    showMessage(e.message);
   }
 });
 
-// ── Enter on confirm field triggers submit ─────────────
 document.getElementById("confirm").addEventListener("keydown", (e) => {
   if (e.key === "Enter") btn.click();
 });
