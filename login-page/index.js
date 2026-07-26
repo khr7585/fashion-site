@@ -1,5 +1,4 @@
 const API_BASE = "http://localhost:3000/api/auth";
-
 function showError(msg, isSuccess = false) {
   let err = document.getElementById("authError");
   if (!err) {
@@ -12,20 +11,16 @@ function showError(msg, isSuccess = false) {
   err.style.color = isSuccess ? "#2f855a" : "#e53e3e";
   err.textContent = msg;
 }
-
 document.querySelector(".btn-login").addEventListener("click", async () => {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
   const btn = document.querySelector(".btn-login");
-
   if (!email || !password) {
     showError("Please fill in all fields.");
     return;
   }
-
   btn.textContent = "Signing in...";
   btn.disabled = true;
-
   try {
     const res = await fetch(`${API_BASE}/login`, {
       method: "POST",
@@ -33,13 +28,10 @@ document.querySelector(".btn-login").addEventListener("click", async () => {
       credentials: "include",
       body: JSON.stringify({ email, password }),
     });
-
     const data = await res.json();
-
     if (!res.ok) {
       throw new Error(data.message || "Login failed.");
     }
-
     window.location.href = "../index.html";
   } catch (e) {
     btn.textContent = "Sign in";
@@ -47,11 +39,9 @@ document.querySelector(".btn-login").addEventListener("click", async () => {
     showError(e.message);
   }
 });
-
 document.getElementById("password").addEventListener("keydown", (e) => {
   if (e.key === "Enter") document.querySelector(".btn-login").click();
 });
-
 document.querySelector(".forgot").addEventListener("click", async (e) => {
   e.preventDefault();
   const email = document.getElementById("email").value.trim();
@@ -59,7 +49,6 @@ document.querySelector(".forgot").addEventListener("click", async (e) => {
     showError("Enter your email above first, then click Forgot password.");
     return;
   }
-
   try {
     const res = await fetch(`${API_BASE}/forgot-password`, {
       method: "POST",
