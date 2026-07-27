@@ -50,6 +50,19 @@ window.addEventListener("scroll", handleNavbar);
 window.addEventListener("load", handleNavbar);
 //NAVBAR END
 
+//HAMBURGER MENU START
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const navRight = document.getElementById("navRight");
+hamburgerBtn.addEventListener("click", () => {
+  navRight.classList.toggle("open");
+});
+navRight.querySelectorAll("a, button").forEach((el) => {
+  el.addEventListener("click", () => {
+    navRight.classList.remove("open");
+  });
+});
+//HAMBURGER MENU END
+
 //PRODUCTS START
 const products = [
   {
@@ -417,7 +430,7 @@ document.getElementById("payNowBtn").addEventListener("click", async () => {
       const verifyRes = await fetch(`${API_URL}/api/verify-payment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials:"include",
+        credentials: "include",
         body: JSON.stringify({
           ...response,
           address: checkoutData.address,

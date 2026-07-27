@@ -15,7 +15,8 @@ body {
   position: relative;
   height: 100vh;
   background: url("./images/chatp.png") no-repeat;
-  background-position: center 20%;
+  background-position: center 10%;
+  background-size: cover;
 }
 
 .hero::before {
@@ -96,7 +97,21 @@ body {
 .nav-bag span {
   cursor: pointer;
 }
-
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 20;
+}
+.hamburger span {
+  width: 26px;
+  height: 2px;
+  background: #fff;
+}
 .login {
   padding: 6px 14px;
   border: 1px solid #fff;
@@ -830,5 +845,138 @@ body {
 @media (max-width: 480px) {
   .contact-drawer {
     width: 100vw;
+  }
+}
+
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 10px 30px;
+  }
+  .hero-content {
+    left: 40px;
+  }
+  .hero-content h1 {
+    font-size: 60px;
+  }
+  .footer h1 {
+    font-size: 60px;
+    letter-spacing: 6px;
+  }
+  .checkout-panel {
+    width: 420px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px 20px;
+  }
+  .logo {
+    font-size: 26px;
+    letter-spacing: 3px;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-right {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    background: rgba(10, 10, 10, 0.95);
+    padding: 24px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .nav-right.open {
+    max-height: 400px;
+  }
+  .nav-links {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .nav-bag {
+    gap: 20px;
+  }
+
+  .hero-content {
+    left: 24px;
+    top: 85%;
+  }
+  .hero-content h1 {
+    font-size: 38px;
+  }
+  .sub {
+    font-size: 11px;
+  }
+  .buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .our-products {
+    font-size: 34px;
+    padding: 50px 0 0 0;
+  }
+  .left-right {
+    padding: 0 20px;
+  }
+  .products {
+    padding: 20px 0;
+  }
+  .product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    row-gap: 30px;
+  }
+
+  .footer {
+    padding: 50px 20px;
+  }
+  .footer h1 {
+    font-size: 40px;
+    letter-spacing: 3px;
+  }
+
+  .checkout-panel {
+    width: 100%;
+    padding: 24px 18px;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .contact-drawer {
+    width: 100%;
+  }
+
+  .overlay-content {
+    padding: 40px 16px 30px;
+  }
+  .search-field {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-content h1 {
+    font-size: 30px;
+  }
+  .card img {
+    aspect-ratio: 3/4;
+  }
+  .info h3 {
+    font-size: 18px;
   }
 }
