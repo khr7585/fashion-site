@@ -9,7 +9,7 @@ const {
   verifyEmail,
   forgotPassword,
   resetPassword,
-} = require("../controllers/authController");
+} = require("../controllers/authcontroller");
 router.post("/signup", signup);
 router.post("/login", login);
 router.post("/logout", logout);
