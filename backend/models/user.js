@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
       minlength: 6,
-      select: false, 
+      select: false,
     },
     isVerified: {
       type: Boolean,
@@ -39,7 +39,12 @@ const userSchema = new mongoose.Schema(
       type: Date,
       select: false,
     },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 module.exports = mongoose.model("User", userSchema);
