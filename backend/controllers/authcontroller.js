@@ -1,11 +1,11 @@
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+const User = require("../models/user");
 const {
   sendVerificationEmail,
   sendResetPasswordEmail,
-} = require("../utils/sendEmail");
+} = require("../utils/sendemail");
 function signToken(userId) {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN || "7d",
