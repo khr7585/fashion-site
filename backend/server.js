@@ -7,7 +7,7 @@ const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const authRoutes = require("./routes/auth");
 const { sendEmail } = require("./utils/sendemail");
-const verifyToken=require("./middleware/verifytoken")
+const verifyToken=require("./middleware/verifytoken");
 const app = express();
 app.use(
   cors({
@@ -16,6 +16,8 @@ app.use(
   }),
 );
 app.use(express.json());
+const productroutes=require("./routes/productroutes");
+app.use("/api/products",productroutes);
 app.use(cookieParser());
 mongoose
   .connect(process.env.MONGO_URI)

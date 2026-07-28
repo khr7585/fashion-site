@@ -67,7 +67,9 @@ exports.signup = async (req, res) => {
     });
   } catch (err) {
     console.error("Signup error:", err);
-    res.status(500).json({ message: "Something went wrong. Please try again." });
+    res
+      .status(500)
+      .json({ message: "Something went wrong. Please try again." });
   }
 };
 exports.login = async (req, res) => {
@@ -77,7 +79,7 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: "Email and password required." });
     }
     const user = await User.findOne({ email: email.toLowerCase() }).select(
-      "+password"
+      "+password",
     );
     if (!user) {
       return res.status(401).json({ message: "Incorrect email or password." });
@@ -91,7 +93,9 @@ exports.login = async (req, res) => {
     res.json({ message: "Logged in successfully.", user: publicUser(user) });
   } catch (err) {
     console.error("Login error:", err);
-    res.status(500).json({ message: "Something went wrong. Please try again." });
+    res
+      .status(500)
+      .json({ message: "Something went wrong. Please try again." });
   }
 };
 exports.logout = (req, res) => {
@@ -149,7 +153,7 @@ exports.forgotPassword = async (req, res) => {
     await user.save();
     try {
       await sendResetPasswordEmail(user.email, resetToken);
-      console.log("✅ Reset email sent to:",user.email);
+      console.log("✅ Reset email sent to:", user.email);
     } catch (emailErr) {
       console.error("Failed to send reset email:", emailErr.message);
       user.resetPasswordToken = undefined;
