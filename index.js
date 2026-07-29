@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:3000";
+// const API_URL = "http://localhost:3000";
+const API_URL = "https://fashion-site-0onq.onrender.com";
 function goto_login() {
   window.location.href = "./login-page/index.html";
 }
@@ -7,7 +8,7 @@ function back_to_shop() {
 }
 
 //AUTH START
-const AUTH_API_BASE = "http://localhost:3000/api/auth";
+const AUTH_API_BASE = "https://fashion-site-0onq.onrender.com";
 async function checkAuthState() {
   const loginBtn = document.querySelector(".login");
   if (!loginBtn) return;
@@ -482,7 +483,7 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeContactDrawer();
 });
 
-const CONTACT_API_URL = "http://localhost:3000/api/contact";
+const CONTACT_API_URL = "https://fashion-site-0onq.onrender.com";
 
 document.getElementById("contactForm").addEventListener("submit", async (e) => {
   e.preventDefault();

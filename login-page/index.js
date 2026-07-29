@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3000/api/auth";
+const API_BASE = "https://fashion-site-0onq.onrender.com";
 function showError(msg, isSuccess = false) {
   let err = document.getElementById("authError");
   if (!err) {

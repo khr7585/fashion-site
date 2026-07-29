@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3000/api/auth";
+const API_BASE = "https://fashion-site-0onq.onrender.com";
 window.checkStrength = function (val) {
   let bar = document.getElementById("strengthBar");
   if (!bar) {
