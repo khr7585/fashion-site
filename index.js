@@ -13,7 +13,7 @@ async function checkAuthState() {
   const loginBtn = document.querySelector(".login");
   if (!loginBtn) return;
   try {
-    const res = await fetch(`${AUTH_API_BASE}api/auth/me`, { credentials: "include" });
+    const res = await fetch(`${AUTH_API_BASE}/api/auth/me`, { credentials: "include" });
     if (res.ok) {
       const { user } = await res.json();
       loginBtn.textContent = "Logout";
@@ -25,7 +25,7 @@ async function checkAuthState() {
 }
 async function logout() {
   try {
-    await fetch(`${AUTH_API_BASE}api/auth/logout`, {
+    await fetch(`${AUTH_API_BASE}/api/auth/logout`, {
       method: "POST",
       credentials: "include",
     });
