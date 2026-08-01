@@ -22,7 +22,7 @@ document.querySelector(".btn-login").addEventListener("click", async () => {
   btn.textContent = "Signing in...";
   btn.disabled = true;
   try {
-    const res = await fetch(`${API_BASE}/login`, {
+    const res = await fetch(`${API_BASE}api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -50,7 +50,7 @@ document.querySelector(".forgot").addEventListener("click", async (e) => {
     return;
   }
   try {
-    const res = await fetch(`${API_BASE}/forgot-password`, {
+    const res = await fetch(`${API_BASE}api/auth/forgot-password`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),

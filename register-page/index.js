@@ -65,7 +65,7 @@ btn.addEventListener("click", async () => {
   btn.textContent = "Creating account...";
   btn.disabled = true;
   try {
-    const res = await fetch(`${API_BASE}/signup`, {
+    const res = await fetch(`${API_BASE}api/auth/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
