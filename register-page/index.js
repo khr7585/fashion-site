@@ -1,4 +1,8 @@
-const API_BASE = "https://fashion-site-0onq.onrender.com";
+// const API_BASE = "https://fashion-site-0onq.onrender.com";
+const API_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:3000"
+    : "https://fashion-site-0onq.onrender.com";
 window.checkStrength = function (val) {
   let bar = document.getElementById("strengthBar");
   if (!bar) {
@@ -65,7 +69,7 @@ btn.addEventListener("click", async () => {
   btn.textContent = "Creating account...";
   btn.disabled = true;
   try {
-    const res = await fetch(`${API_BASE}/api/auth/signup`, {
+    const res = await fetch(`${API_URL}/api/auth/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

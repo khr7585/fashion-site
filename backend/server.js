@@ -11,7 +11,7 @@ const verifyToken=require("./middleware/verifytoken");
 const app = express();
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "https://khr7585.github.io",
+    origin: [process.env.CLIENT_URL || "https://khr7585.github.io","http://localhost:5500"],
     credentials: true,
   }),
 );

@@ -1,4 +1,8 @@
-const API_BASE = "https://fashion-site-0onq.onrender.com";
+// const API_BASE = "https://fashion-site-0onq.onrender.com";
+const API_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:3000"
+    : "https://fashion-site-0onq.onrender.com";
 function showError(msg, isSuccess = false) {
   let err = document.getElementById("authError");
   if (!err) {
@@ -23,7 +27,7 @@ document.querySelector(".btn-login").addEventListener("click", async () => {
   btn.disabled = true;
   try {
     // console.log(`${API_BASE}/api/auth/login`);
-    const res = await fetch(`${API_BASE}/api/auth/login`, {
+    const res = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -51,7 +55,7 @@ document.querySelector(".forgot").addEventListener("click", async (e) => {
     return;
   }
   try {
-    const res = await fetch(`${API_BASE}/api/auth/forgot-password`, {
+    const res = await fetch(`${API_URL}/api/auth/forgot-password`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),

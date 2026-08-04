@@ -1,5 +1,9 @@
 // const API_URL = "http://localhost:3000";
-const API_URL = "https://fashion-site-0onq.onrender.com";
+// const API_URL = "https://fashion-site-0onq.onrender.com";
+const API_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:3000"
+    : "https://fashion-site-0onq.onrender.com";
 function goto_login() {
   window.location.href = "./login-page/index.html";
 }
@@ -8,7 +12,7 @@ function back_to_shop() {
 }
 
 //AUTH START
-const AUTH_API_BASE = "https://fashion-site-0onq.onrender.com";
+const AUTH_API_BASE = API_URL;
 async function checkAuthState() {
   const loginBtn = document.querySelector(".login");
   if (!loginBtn) return;
