@@ -44,8 +44,8 @@ const products = [
   {
     id: 1,
     name: "Midnight Chrono Watch",
-    price: "$249.99",
-    oldPrice: "$299.99",
+    price: "₹249.99",
+    oldPrice: "₹299.99",
     image: "../images/watch1.jpg",
     badge: "NEW",
     badgeClass: "new",
@@ -61,7 +61,7 @@ const products = [
   {
     id: 2,
     name: "StreetCore Joggers",
-    price: "$399.99",
+    price: "₹399.99",
     image: "../images/pant1.jpg",
     badge: "POPULAR",
     badgeClass: "popular",
@@ -77,8 +77,8 @@ const products = [
   {
     id: 3,
     name: "AeroFlex Graphic T-shirt",
-    price: "$49.99",
-    oldPrice: "$69.99",
+    price: "₹49.99",
+    oldPrice: "₹69.99",
     image: "../images/tshirt1.webp",
     badge: "SALE",
     badgeClass: "sale",
@@ -93,7 +93,7 @@ const products = [
   {
     id: 4,
     name: "Running Shoes",
-    price: "$129.99",
+    price: "₹129.99",
     image: "../images/shoe1.jpg",
     badge: "OUT OF STOCK",
     badgeClass: "sale",
@@ -110,8 +110,8 @@ const products = [
   {
     id: 5,
     name: "NovaFit Slim Bottoms",
-    price: "$249.99",
-    oldPrice: "$299.99",
+    price: "₹249.99",
+    oldPrice: "₹299.99",
     image: "../images/pant2.webp",
     badge: "NEW",
     badgeClass: "new",
@@ -127,7 +127,7 @@ const products = [
   {
     id: 6,
     name: "NeoPrint Casual Tee",
-    price: "$399.99",
+    price: "₹399.99",
     image: "../images/thsirt2.jpeg",
     badge: "POPULAR",
     badgeClass: "popular",
@@ -143,7 +143,7 @@ const products = [
   {
     id: 7,
     name: "EliteForm Trousers",
-    price: "$49.99",
+    price: "₹49.99",
     image: "../images/pant3.webp",
     badge: "SALE",
     badgeClass: "sale",
@@ -160,7 +160,7 @@ const products = [
   {
     id: 8,
     name: "Classic Edge Shirt",
-    price: "$199.99",
+    price: "₹199.99",
     image: "../images/shirt1.jpg",
     badge: "TRENDING",
     badgeClass: "trending",
@@ -176,8 +176,8 @@ const products = [
   {
     id: 9,
     name: "StreetFly Kicks",
-    price: "$249.99",
-    oldPrice: "$299.99",
+    price: "₹249.99",
+    oldPrice: "₹299.99",
     image: "../images/shoe2.jpg",
     badge: "NEW",
     badgeClass: "new",
@@ -193,7 +193,7 @@ const products = [
   {
     id: 10,
     name: "MetroCheck Shirt",
-    price: "$399.99",
+    price: "₹399.99",
     image: "../images/shirt2.jpg",
     badge: "POPULAR",
     badgeClass: "popular",
@@ -210,7 +210,7 @@ const products = [
   {
     id: 11,
     name: "TitanEdge Chronograph",
-    price: "$49.99",
+    price: "₹49.99",
     image: "../images/watch2.jpg",
     badge: "SALE",
     badgeClass: "sale",
@@ -226,7 +226,7 @@ const products = [
   {
     id: 12,
     name: "VibeCore Casual Shirt",
-    price: "$129.99",
+    price: "₹129.99",
     image: "../images/shirt3.jpeg",
     badge: "OUT OF STOCK",
     badgeClass: "sale",
