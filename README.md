@@ -314,17 +314,15 @@ Add screenshots of your application here to make the repository more attractive 
 
 Example:
 
-```markdown
-![Home Page](screenshots/home.png)
+<img src="screenshots/home.png" alt="Home Page" width="500">
 
-![Product Page](screenshots/product.png)
+<img src="screenshots/product.png" alt="Product Page" width="500">
 
-![Cart](screenshots/cart.png)
+<img src="screenshots/cart.png" alt="Cart" width="500">
 
-![Login](screenshots/login.png)
+<img src="screenshots/login.png" alt="Login" width="500">
 
-![Checkout](screenshots/checkout.png)
-```
+<img src="screenshots/contact.png" alt="Contact" width="500">
 
 Recommended screenshots:
 
@@ -334,8 +332,6 @@ Recommended screenshots:
 4. Cart
 5. Wishlist
 6. Login/Register
-7. Checkout
-8. Payment page
 
 ---
 
