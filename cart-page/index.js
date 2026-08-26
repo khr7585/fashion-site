@@ -53,6 +53,7 @@ function updateCart() {
   const cartBody = document.getElementById("cartBody");
   const cartCount = document.getElementById("cartCount");
   const cartSubtotal = document.getElementById("cartSubtotal");
+  const checkoutbtn= document.getElementById("proceedToCheckoutBtn")
 
   if (cart.length === 0) {
     cartBody.innerHTML = `
@@ -61,8 +62,11 @@ function updateCart() {
     `;
     cartCount.textContent = "0";
     cartSubtotal.textContent = "$0.00";
+    checkoutbtn.disabled=true;
     return;
   }
+  cartBody.classList.remove("is-empty");
+  checkoutbtn.disabled=false;
 
   let total = 0;
   let count = 0;
@@ -107,3 +111,4 @@ document.getElementById("cartBody").addEventListener("click", (e) => {
   if (action === "decrease") changeQuantity(id, -1);
   if (action === "remove") removeFromCart(id);
 });
+updateCart();
