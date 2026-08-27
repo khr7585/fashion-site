@@ -23,7 +23,7 @@ function addToCart(productId) {
     cart.push({ ...product, quantity: 1 });
   }
 
-  updateCart();
+  updateCart(productId);
   openCart();
 }
 
@@ -37,7 +37,7 @@ function changeQuantity(productId, delta) {
     cart = cart.filter((item) => item.id != productId);
   }
 
-  updateCart();
+  updateCart(productId);
 }
 
 function removeFromCart(productId) {
@@ -49,11 +49,11 @@ function parsePrice(priceStr) {
   return parseFloat(String(priceStr).replace(/[^0-9.]/g, ""));
 }
 
-function updateCart() {
+function updateCart(changedId = null) {
   const cartBody = document.getElementById("cartBody");
   const cartCount = document.getElementById("cartCount");
   const cartSubtotal = document.getElementById("cartSubtotal");
-  const checkoutbtn= document.getElementById("proceedToCheckoutBtn")
+  const checkoutbtn = document.getElementById("proceedToCheckoutBtn");
 
   if (cart.length === 0) {
     cartBody.innerHTML = `
@@ -62,11 +62,11 @@ function updateCart() {
     `;
     cartCount.textContent = "0";
     cartSubtotal.textContent = "$0.00";
-    checkoutbtn.disabled=true;
+    checkoutbtn.disabled = true;
     return;
   }
   cartBody.classList.remove("is-empty");
-  checkoutbtn.disabled=false;
+  checkoutbtn.disabled = false;
 
   let total = 0;
   let count = 0;
@@ -79,7 +79,7 @@ function updateCart() {
     count += item.quantity;
 
     cartBody.innerHTML += `
-      <div class="cart-item">
+      <div class="cart-item" data-id="${item.id}">
         <img src="${item.image}" width="70">
         <div class="cart-item-info">
           <h4>${item.name}</h4>
@@ -98,6 +98,13 @@ function updateCart() {
 
   cartCount.textContent = count;
   cartSubtotal.textContent = "$" + total.toFixed(2);
+  if (changedId != null) {
+    const row = cartBody.querySelector(`.cart-item[data-id="${changedId}"]`);
+    if (row) {
+      row.classList.add("qty-flash");
+      setTimeout(() => row.classList.remove("qty-flash"), 400);
+    }
+  }
 }
 
 document.getElementById("cartBody").addEventListener("click", (e) => {
