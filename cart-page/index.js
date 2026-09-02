@@ -10,10 +10,31 @@ function closeCart() {
 document.getElementById("cartCloseBtn").addEventListener("click", closeCart);
 document.getElementById("cartContinueBtn").addEventListener("click", closeCart);
 document.getElementById("cartBackdrop").addEventListener("click", closeCart);
+// const CART_STORAGE_KEY = "khrCart";
 
+// function saveCart() {
+//   localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+// }
+
+// function loadCart() {
+//   try {
+//     const stored = localStorage.getItem(CART_STORAGE_KEY);
+//     return stored ? JSON.parse(stored) : [];
+//   } catch (err) {
+//     return [];
+//   }
+// }
+// let cart = loadCart();
 let cart = [];
-
+function isLoggedIn() {
+  return !!localStorage.getItem("jwt");
+}
 function addToCart(productId) {
+  if (!isLoggedIn()) {
+    alert("Please log in to add items to your cart.");
+    window.location.href = "./login-page/index.html";
+    return;
+  }
   const product = products.find((item) => item.id === productId);
   const existingItem = cart.find((item) => item.id === productId);
 
@@ -105,6 +126,7 @@ function updateCart(changedId = null) {
       setTimeout(() => row.classList.remove("qty-flash"), 400);
     }
   }
+  // saveCart();
 }
 
 document.getElementById("cartBody").addEventListener("click", (e) => {
