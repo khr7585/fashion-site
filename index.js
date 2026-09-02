@@ -10,6 +10,18 @@ function goto_login() {
 function back_to_shop() {
   window.history.back();
 }
+// TOAST-alert message
+function showToast(message, duration = 2500) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(toast._hideTimer);
+  toast._hideTimer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, duration);
+}
+// TOAST END
 
 //AUTH START
 const AUTH_API_BASE = API_URL;
@@ -33,6 +45,10 @@ async function checkAuthState() {
   } catch (e) {
     isLoggedIn = false;
     console.error("Auth check failed:", e.message);
+  } finally {
+    document.querySelectorAll(".card-btn:not(.out-of-stock)").forEach((btn) => {
+      btn.disabled = false;
+    });
   }
 }
 async function logout() {
@@ -227,6 +243,9 @@ products.forEach((product) => {
   `;
 
   productGrid.appendChild(card);
+});
+document.querySelectorAll(".card-btn:not(.out-of-stock)").forEach((btn) => {
+  btn.disabled = true;
 });
 function openProduct(id) {
   window.location.href = `./product-page/product.html?id=${id}`;

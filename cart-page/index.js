@@ -29,8 +29,10 @@ let cart = loadCart();
 
 function addToCart(productId) {
   if (!isLoggedIn) {
-    alert("Please log in to add items to your cart.");
-    window.location.href = "./login-page/index.html";
+    showToast("Please log in to add items to your cart.");
+    // setTimeout (()=>{
+    // window.location.href = "./login-page/index.html";
+    // },1200);
     return;
   }
   const product = products.find((item) => item.id === productId);
