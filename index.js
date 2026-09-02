@@ -13,17 +13,25 @@ function back_to_shop() {
 
 //AUTH START
 const AUTH_API_BASE = API_URL;
+let isLoggedIn = false;
 async function checkAuthState() {
   const loginBtn = document.querySelector(".login");
-  if (!loginBtn) return;
   try {
-    const res = await fetch(`${AUTH_API_BASE}/api/auth/me`, { credentials: "include" });
+    const res = await fetch(`${AUTH_API_BASE}/api/auth/me`, {
+      credentials: "include",
+    });
     if (res.ok) {
       const { user } = await res.json();
-      loginBtn.textContent = "Logout";
-      loginBtn.setAttribute("onclick", "logout()");
+      isLoggedIn = true;
+      if (loginBtn) {
+        loginBtn.textContent = "Logout";
+        loginBtn.setAttribute("onclick", "logout()");
+      }
+    } else {
+      isLoggedIn = false;
     }
   } catch (e) {
+    isLoggedIn = false;
     console.error("Auth check failed:", e.message);
   }
 }
@@ -36,6 +44,7 @@ async function logout() {
   } catch (e) {
     console.error("Logout error:", e.message);
   } finally {
+    localStorage.removeItem("khrCart");
     window.location.reload();
   }
 }
