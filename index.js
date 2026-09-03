@@ -49,6 +49,7 @@ async function checkAuthState() {
     document.querySelectorAll(".card-btn:not(.out-of-stock)").forEach((btn) => {
       btn.disabled = false;
     });
+    initCart();
   }
 }
 async function logout() {
@@ -60,7 +61,7 @@ async function logout() {
   } catch (e) {
     console.error("Logout error:", e.message);
   } finally {
-    localStorage.removeItem("khrCart");
+    // localStorage.removeItem("khrCart");
     window.location.reload();
   }
 }

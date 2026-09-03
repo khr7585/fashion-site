@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const authRoutes = require("./routes/auth");
+const cartRoutes=require("./routes/cart");
 const { sendEmail } = require("./utils/sendemail");
 const verifyToken=require("./middleware/verifytoken");
 const app = express();
@@ -24,6 +25,7 @@ mongoose
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 app.use("/api/auth", authRoutes);
+app.use("/api/cart",cartRoutes);
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
