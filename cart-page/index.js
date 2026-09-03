@@ -81,8 +81,13 @@ function addToCart(productId) {
 function changeQuantity(productId, delta) {
   const item = cart.find((item) => item.id == productId);
   if (!item) return;
+  const newQty = item.quantity + delta;
+  if (newQty > item.stock) {
+    showToast(`only ${item.stock}in stock.`);
+    return;
+  }
 
-  item.quantity += delta;
+  item.quantity = newQty;
 
   if (item.quantity <= 0) {
     cart = cart.filter((item) => item.id != productId);
@@ -132,23 +137,24 @@ function updateCart(changedId = null) {
     const price = parsePrice(item.price);
     total += price * item.quantity;
     count += item.quantity;
+    const atMax = item.quantity >= item.stock;
 
     cartBody.innerHTML += `
-      <div class="cart-item" data-id="${item.id}">
-        <img src="${item.image}" width="70">
-        <div class="cart-item-info">
-          <h4>${item.name}</h4>
-          <p>${item.price}</p>
-        </div>
-        <div class="qty-controls">
-          <button class="qty-btn" data-action="decrease" data-id="${item.id}">−</button>
-          <input class="qty-input" type="text" value="${item.quantity}" data-id="${item.id}" readonly>
-          <button class="qty-btn" data-action="increase" data-id="${item.id}">+</button>
-        </div>
-        <button class="remove-btn" data-action="remove" data-id="${item.id}">&times;</button>
+    <div class="cart-item" data-id="${item.id}">
+      <img src="${item.image}" width="70">
+      <div class="cart-item-info">
+        <h4>${item.name}</h4>
+        <p>${item.price}</p>
       </div>
-      <hr>
-    `;
+      <div class="qty-controls">
+        <button class="qty-btn" data-action="decrease" data-id="${item.id}">−</button>
+        <input class="qty-input" type="text" value="${item.quantity}" data-id="${item.id}" readonly>
+        <button class="qty-btn" data-action="increase" data-id="${item.id}" ${atMax ? "disabled" : ""}>+</button>
+      </div>
+      <button class="remove-btn" data-action="remove" data-id="${item.id}">&times;</button>
+    </div>
+    <hr>
+  `;
   });
 
   cartCount.textContent = count;

@@ -104,6 +104,7 @@ const products = [
     image: "./images/watch1.jpg",
     badge: "New",
     badgeClass: "new",
+    stock:5
   },
   {
     id: 2,
@@ -112,6 +113,7 @@ const products = [
     image: "./images/pant1.jpg",
     badge: "Popular",
     badgeClass: "yellow",
+    stock:6
   },
   {
     id: 3,
@@ -120,6 +122,7 @@ const products = [
     image: "./images/tshirt1.webp",
     badge: "Sale",
     badgeClass: "sale",
+    stock:2
   },
   {
     id: 4,
@@ -127,6 +130,7 @@ const products = [
     price: "₹129.99",
     image: "./images/shoe1.jpg",
     outOfStock: true,
+    stock:7
   },
   {
     id: 5,
@@ -136,6 +140,8 @@ const products = [
     image: "./images/pant2.webp",
     badge: "New",
     badgeClass: "new",
+    stock:3
+
   },
   {
     id: 6,
@@ -144,6 +150,7 @@ const products = [
     image: "./images/thsirt2.jpeg",
     badge: "Popular",
     badgeClass: "yellow",
+    stock:1
   },
   {
     id: 7,
@@ -152,6 +159,7 @@ const products = [
     image: "./images/pant3.webp",
     badge: "Sale",
     badgeClass: "sale",
+    stock:6
   },
   {
     id: 8,
@@ -160,6 +168,7 @@ const products = [
     image: "./images/shirt1.jpg",
     badge: "Trending",
     badgeClass: "new",
+    stock:8
   },
   {
     id: 9,
@@ -169,6 +178,7 @@ const products = [
     image: "./images/shoe2.jpg",
     badge: "New",
     badgeClass: "new",
+    stock:9
   },
   {
     id: 10,
@@ -177,6 +187,7 @@ const products = [
     image: "./images/shirt2.jpg",
     badge: "Popular",
     badgeClass: "yellow",
+    stock:10
   },
   {
     id: 11,
@@ -185,6 +196,7 @@ const products = [
     image: "./images/watch2.jpg",
     badge: "Sale",
     badgeClass: "sale",
+    stock:3
   },
   {
     id: 12,
@@ -192,6 +204,7 @@ const products = [
     price: "₹129.99",
     image: "./images/shirt3.jpeg",
     outOfStock: true,
+    stock:4
   },
 ];
 
