@@ -424,9 +424,13 @@ function renderSummary() {
   const container = document.getElementById("summaryItems");
   container.innerHTML = "";
   let subtotal = 0;
+  let stockIssue=false;
   checkoutData.cart.forEach((item) => {
     const price = parseFloat(item.price.replace("$", ""));
     subtotal += price * item.quantity;
+    if(item.quantity>item.stock){
+      stockIssue=true;
+    }
     container.innerHTML += `
       <div class="summary-row">
         <span>${item.name} x${item.quantity}</span>
@@ -438,6 +442,13 @@ function renderSummary() {
   document.getElementById("summaryTotal").textContent =
     `$${subtotal.toFixed(2)}`;
   checkoutData.total = subtotal;
+  const proceedbtn=document.getElementById("proceedToPayment");
+if(stockIssue){
+  proceedbtn.disabled=true;
+  showToast("Some items exceed available stock. Please adjust your cart.");
+}else{
+  proceedbtn.disabled=false;
+}
 }
 
 document
