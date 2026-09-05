@@ -1,4 +1,4 @@
-const product = require("../models/product");
+const product = require("../../backend/models/product");
 
 //ADD
 const addproduct = async (req, res) => {
@@ -46,7 +46,7 @@ const getproductbyid = async (req, res) => {
     }
     res.status(200).json({
       success: true,
-      product,
+      product:foundproduct,
     });
   } catch (error) {
     res.status(500).json({

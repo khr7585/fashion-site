@@ -14,7 +14,7 @@ const products = [
       "Quartz movement",
     ],
     category: "Watches",
-    images: ["./images/watch1.jpg"],
+    images: ["./images/watch1.png"],
     stock: 5,
     discount: 17,
   },

@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../../backend/models/user");
 
 exports.getCart = async (req, res) => {
   try {
