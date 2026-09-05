@@ -392,13 +392,18 @@ document.getElementById("payNowBtn").addEventListener("click", async () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ amount: checkoutData.total, currency: "INR" }),
+      body: JSON.stringify({ amount: checkoutData.total, currency: "INR", cart: checkoutData.cart }),
     });
     if (res.status === 401) {
       alert("Please log in to complete your purchase.");
       window.location.href = "./login-page/index.html";
       return;
     }
+    if (res.status === 409) {
+  const data = await res.json();
+  showToast(data.error);
+  return;
+}
     if (!res.ok) throw new Error("Order creation failed");
     order = await res.json();
     console.log(order);
@@ -429,6 +434,8 @@ document.getElementById("payNowBtn").addEventListener("click", async () => {
       if (result.success) {
         document.getElementById("checkoutModal").style.display = "none";
         alert("Order placed successfully!");
+      }else{
+        showToast(result.message||"payment verification failed.");
       }
     },
     prefill: {

@@ -9,6 +9,7 @@ const authRoutes = require("./routes/auth");
 const cartRoutes=require("./routes/cart");
 const { sendEmail } = require("./utils/sendemail");
 const verifyToken=require("./middleware/verifytoken");
+const Product=require("./models/product");
 const app = express();
 app.use(
   cors({
@@ -32,7 +33,22 @@ const razorpay = new Razorpay({
 });
 app.post("/api/create-order",verifyToken, async (req, res) => {
   try {
-    const { amount, currency } = req.body;
+    const { amount, currency ,cart } = req.body;
+    if (!Array.isArray(cart) || cart.length === 0) {
+      return res.status(400).json({ error: "Cart is empty." });
+    }
+
+    for (const item of cart) {
+      const product = await Product.findById(item.id);
+      if (!product) {
+        return res.status(404).json({ error: `Product not found: ${item.name}` });
+      }
+      if (product.stock < item.quantity) {
+        return res.status(409).json({
+          error: `Only ${product.stock} left for "${product.name}".`,
+        });
+      }
+    }
     const order = await razorpay.orders.create({
       amount: Math.round(amount * 100),
       currency,
@@ -44,20 +60,39 @@ app.post("/api/create-order",verifyToken, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-app.post("/api/verify-payment",verifyToken, (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
-    req.body;
+app.post("/api/verify-payment", verifyToken, async (req, res) => {
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature, cart } = req.body;
   const generated = crypto
     .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
     .update(`${razorpay_order_id}|${razorpay_payment_id}`)
     .digest("hex");
 
-  if (generated === razorpay_signature) {
+  if (generated !== razorpay_signature) {
+    return res.status(400).json({ success: false });
+  }
+
+  try {
+    for (const item of cart) {
+      const updated = await Product.findOneAndUpdate(
+        { _id: item.id, stock: { $gte: item.quantity } },
+        { $inc: { stock: -item.quantity } },
+        { new: true },
+      );
+      if (!updated) {
+        return res.status(409).json({
+          success: false,
+          message: `Sorry, "${item.name}" sold out during checkout.`,
+        });
+      }
+    }
     res.json({ success: true });
-  } else {
-    res.status(400).json({ success: false });
+  } catch (err) {
+    console.error("Stock decrement error:", err.message);
+    res.status(500).json({ success: false, message: "Something went wrong." });
   }
 });
+
+
 app.post("/api/contact", async (req, res) => {
   const { name, email, phone, reason, message } = req.body;
   if (!name || !email || !message) {
