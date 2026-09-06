@@ -56,9 +56,9 @@ app.post("/api/create-order",verifyToken, async (req, res) => {
     });
     res.json(order);
   } catch (err) {
-    console.error("Razorpay error:", err.message);
-    res.status(500).json({ error: err.message });
-  }
+  console.error("Razorpay error:", err);
+  res.status(500).json({ error: err.message || "Unknown error" });
+}
 });
 app.post("/api/verify-payment", verifyToken, async (req, res) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature, cart } = req.body;

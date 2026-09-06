@@ -354,12 +354,12 @@ function renderSummary() {
   const container = document.getElementById("summaryItems");
   container.innerHTML = "";
   let subtotal = 0;
-  let stockIssue=false;
+  let stockIssue = false;
   checkoutData.cart.forEach((item) => {
-    const price = parseFloat(item.price.replace("$", ""));
+    const price = parsePrice(item.price);
     subtotal += price * item.quantity;
-    if(item.quantity>item.stock){
-      stockIssue=true;
+    if (item.quantity > item.stock) {
+      stockIssue = true;
     }
     container.innerHTML += `
       <div class="summary-row">
@@ -367,18 +367,16 @@ function renderSummary() {
         <span>$${(price * item.quantity).toFixed(2)}</span>
       </div>`;
   });
-  document.getElementById("summarySubtotal").textContent =
-    `$${subtotal.toFixed(2)}`;
-  document.getElementById("summaryTotal").textContent =
-    `$${subtotal.toFixed(2)}`;
+  document.getElementById("summarySubtotal").textContent = `$${subtotal.toFixed(2)}`;
+  document.getElementById("summaryTotal").textContent = `$${subtotal.toFixed(2)}`;
   checkoutData.total = subtotal;
-  const proceedbtn=document.getElementById("proceedToPayment");
-if(stockIssue){
-  proceedbtn.disabled=true;
-  showToast("Some items exceed available stock. Please adjust your cart.");
-}else{
-  proceedbtn.disabled=false;
-}
+  const proceedbtn = document.getElementById("proceedToPayment");
+  if (stockIssue) {
+    proceedbtn.disabled = true;
+    showToast("Some items exceed available stock. Please adjust your cart.");
+  } else {
+    proceedbtn.disabled = false;
+  }
 }
 
 document

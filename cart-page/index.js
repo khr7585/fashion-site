@@ -81,6 +81,9 @@ function addToCart(productId) {
 function changeQuantity(productId, delta) {
   const item = cart.find((item) => item.id == productId);
   if (!item) return;
+  const liveProduct = products.find((p) => p.id == productId);
+  const maxStock = liveProduct ? liveProduct.stock : item.stock;
+
   const newQty = item.quantity + delta;
   if (newQty > item.stock) {
     showToast(`only ${item.stock}in stock.`);
@@ -137,6 +140,9 @@ function updateCart(changedId = null) {
     const price = parsePrice(item.price);
     total += price * item.quantity;
     count += item.quantity;
+    const liveProduct = products.find((p) => p.id == item.id);
+    const maxStock = liveProduct ? liveProduct.stock : item.stock;
+
     const atMax = item.quantity >= item.stock;
 
     cartBody.innerHTML += `
