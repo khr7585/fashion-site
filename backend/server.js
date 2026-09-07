@@ -10,6 +10,7 @@ const cartRoutes=require("./routes/cart");
 const { sendEmail } = require("./utils/sendemail");
 const verifyToken=require("./middleware/verifytoken");
 const Product=require("./models/product");
+const orderRoutes = require("./routes/order"); 
 const app = express();
 app.use(
   cors({
@@ -27,6 +28,7 @@ mongoose
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 app.use("/api/auth", authRoutes);
 app.use("/api/cart",cartRoutes);
+app.use("/api/orders", orderRoutes);
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,

@@ -418,24 +418,26 @@ document.getElementById("payNowBtn").addEventListener("click", async () => {
     description: "Order Payment",
     order_id: order.id,
     handler: async function (response) {
-      const verifyRes = await fetch(`${API_URL}/api/verify-payment`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          ...response,
-          address: checkoutData.address,
-          cart: checkoutData.cart,
-        }),
-      });
-      const result = await verifyRes.json();
-      if (result.success) {
-        document.getElementById("checkoutModal").style.display = "none";
-        alert("Order placed successfully!");
-      }else{
-        showToast(result.message||"payment verification failed.");
-      }
-    },
+  const verifyRes = await fetch(`${API_URL}/api/verify-payment`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({
+      ...response,
+      address: checkoutData.address,
+      cart: checkoutData.cart,
+    }),
+  });
+  const result = await verifyRes.json();
+  if (result.success) {
+    document.getElementById("checkoutModal").style.display = "none";
+    cart = [];
+    updateCart();
+    showToast("Order placed successfully!");
+  } else {
+    showToast(result.message || "Payment verification failed.");
+  }
+},
     prefill: {
       name: checkoutData.address.fullName,
       contact: checkoutData.address.phone,
