@@ -11,6 +11,7 @@ const { sendEmail } = require("./utils/sendemail");
 const verifyToken=require("./middleware/verifytoken");
 const Product=require("./models/product");
 const orderRoutes = require("./routes/order"); 
+const Order = require("./models/order");
 const app = express();
 app.use(
   cors({
@@ -63,7 +64,7 @@ app.post("/api/create-order",verifyToken, async (req, res) => {
 }
 });
 app.post("/api/verify-payment", verifyToken, async (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature, cart } = req.body;
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature, cart, address } = req.body;
   const generated = crypto
     .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
     .update(`${razorpay_order_id}|${razorpay_payment_id}`)
@@ -74,6 +75,8 @@ app.post("/api/verify-payment", verifyToken, async (req, res) => {
   }
 
   try {
+    let totalAmount = 0;
+
     for (const item of cart) {
       const updated = await Product.findOneAndUpdate(
         { _id: item.id, stock: { $gte: item.quantity } },
@@ -86,14 +89,30 @@ app.post("/api/verify-payment", verifyToken, async (req, res) => {
           message: `Sorry, "${item.name}" sold out during checkout.`,
         });
       }
+      totalAmount += parseFloat(String(item.price).replace(/[^0-9.]/g, "")) * item.quantity;
     }
+
+    await Order.create({
+      user: req.userId,
+      items: cart.map((item) => ({
+        productId: item.id,
+        name: item.name,
+        price: parseFloat(String(item.price).replace(/[^0-9.]/g, "")),
+        image: item.image,
+        quantity: item.quantity,
+      })),
+      address,
+      totalAmount,
+      razorpayOrderId: razorpay_order_id,
+      razorpayPaymentId: razorpay_payment_id,
+    });
+
     res.json({ success: true });
   } catch (err) {
-    console.error("Stock decrement error:", err.message);
+    console.error("Order creation error:", err.message);
     res.status(500).json({ success: false, message: "Something went wrong." });
   }
 });
-
 
 app.post("/api/contact", async (req, res) => {
   const { name, email, phone, reason, message } = req.body;
